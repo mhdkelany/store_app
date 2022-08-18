@@ -29,7 +29,7 @@ class UpdateProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     productNameController.text=products.name!;
     descriptionController.text=products.longDescription!;
-    priceController.text=products.price!;
+    priceController.text=products.price.toString();
     quantityController.text=products.quantity!;
     shortDescriptionController.text=products.shortDescription!;
     return BlocConsumer<StoreAppCubit,StoreAppStates>(
