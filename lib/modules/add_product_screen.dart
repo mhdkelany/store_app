@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:store/layout/cubit/states.dart';
-import 'package:store/modules/main_merchant_screen.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/style/color.dart';
 
@@ -17,6 +16,8 @@ int? hexColor;
 List colors=[];
 RegExp reg = RegExp(r'^\d{0,8}(\.\d{1,4})?$');
 RegExp _regExp = RegExp(r'^[0-9]+$');
+var formKey=GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     var productNameController=TextEditingController();
@@ -24,7 +25,6 @@ RegExp _regExp = RegExp(r'^[0-9]+$');
     var priceController=TextEditingController();
     var quantityController=TextEditingController();
     var shortDescriptionController=TextEditingController();
-    var formKey=GlobalKey<FormState>();
     String ?idCategory;
     return BlocConsumer<StoreAppCubit,StoreAppStates>(
       listener: (context,state)
@@ -285,6 +285,7 @@ RegExp _regExp = RegExp(r'^[0-9]+$');
                               // validator(value, 1, 15, 'product');
                             }
                         ),
+                        
                         // SizedBox(
                         //   height: 15,
                         // ),
@@ -423,6 +424,9 @@ RegExp _regExp = RegExp(r'^[0-9]+$');
                               widget: Text('إضافة منتج',style: TextStyle(color: Colors.white,fontSize: 20),)
                           ),
 
+                        ),
+                        SizedBox(
+                          height: 15,
                         ),
                       ],
                     ),
