@@ -14,7 +14,6 @@ ShimmerWidget.circular({
   required this.width,
   this.shapeBorder=const CircleBorder(),
 }
-
     );
   @override
   Widget build(BuildContext context) {

@@ -75,6 +75,7 @@ class RegisterUserMarketCubit extends Cubit<RegisterUserMarketStates> {
         target: LatLng(lat!, lang!),
         zoom: 18.4746,
       );
+      myMarker=[];
       Marker marker=Marker(
           markerId: MarkerId('1'),
           position: LatLng(lat!, lang!),
@@ -117,7 +118,7 @@ class RegisterUserMarketCubit extends Cubit<RegisterUserMarketStates> {
   void getNewAddress(double lat,double lng)
   {
     placemarkFromCoordinates(lat,lng).then((value) {
-      place=value[0];
+      place=value[1];
       print(value);
       emit(RegisterGetCurrentAddressSuccessState());
     });

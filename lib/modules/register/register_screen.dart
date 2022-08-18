@@ -80,7 +80,7 @@ class RegisterScreen extends StatelessWidget {
                               children: [
                                 MaterialButton(
                                   onPressed: () {
-                                    navigateTo(context, MapScreen(isMarket: isMarket!,));
+                                    navigateToReplacement(context, MapScreen(isMarket: isMarket!,));
                                   },
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.end,

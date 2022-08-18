@@ -6,6 +6,7 @@ import 'package:store/shared/style/route_manager.dart';
 import '../../layout/cubit/states.dart';
 
 navigateTo(BuildContext context,Widget widget)=>Navigator.push(context,Routes(widget));
+navigateToReplacement(BuildContext context,Widget widget)=>Navigator.pushReplacement(context,Routes(widget));
 Widget defaultTextFromField({
   required TextEditingController controller,
    String? text,
