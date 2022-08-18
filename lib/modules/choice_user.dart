@@ -21,16 +21,28 @@ class ChoiceUser extends StatelessWidget {
         {
           if(state is RegisterUserMarketSuccessState)
             {
-              AwesomeDialog(
-                context: context,
-                dialogType: DialogType.SUCCES,
-                animType: AnimType.BOTTOMSLIDE,
-                title: 'تمت عملية التحقق بنجاح',
-                btnOkText: 'تمت',
-                btnOkOnPress: ()
-                {
-                },
-              )..show();
+              if(state.registerModel.state!)
+              {
+                ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(Text(
+                  '${state.registerModel.message}',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16
+                  ),
+                ),Colors.green, Duration(seconds: 2)));
+
+              }
+              else
+              {
+                ScaffoldMessenger.of(context).showSnackBar(buildSnackBar( Text(
+                  ' ${state.registerModel.message} تأكد من البيانات المدخلة ',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16
+                  ),
+                ), Colors.red, Duration(seconds: 3),));
+              }
+
             }
         },
         builder: (context,state)

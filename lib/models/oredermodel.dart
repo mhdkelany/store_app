@@ -5,6 +5,7 @@ class OrderModel
   OrderModel.fromJson(dynamic json)
   {
     status=json['state'];
+    if(json['orders']!=null)
     json['orders'].forEach((element){
       order.add(Order.fromJson(element));
     });
