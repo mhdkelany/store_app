@@ -216,7 +216,7 @@ class RegisterUserMarketCubit extends Cubit<RegisterUserMarketStates> {
     emit(VerifiedPhoneLoadingState());
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+963${phone}',
+        phoneNumber: '+962${phone}',
         verificationCompleted: (PhoneAuthCredential credential) {},
         verificationFailed: (FirebaseAuthException e) {
           //ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(Text('${e.code}'), Colors.red, Duration(seconds: 3)));
