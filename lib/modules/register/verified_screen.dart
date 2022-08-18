@@ -41,6 +41,17 @@ class VerifiedScreen extends StatelessWidget {
           }
         if(state is AuthPhoneSuccessState)
           {
+            AwesomeDialog(
+              context: context,
+              dialogType: DialogType.SUCCES,
+              animType: AnimType.BOTTOMSLIDE,
+              title: 'تمت عملية التحقق بنجاح',
+              btnOkText: 'تمت',
+              btnOkOnPress: ()
+              {
+                Navigator.pop(context);
+              },
+            )..show();
             if(isMarket!)
             {
               RegisterUserMarketCubit.get(context).createUser(password: password, name: name, phone: phone, address: address,userType: 0,context: context);
@@ -51,30 +62,7 @@ class VerifiedScreen extends StatelessWidget {
               RegisterUserMarketCubit.get(context).createUser(password: password, name: name, phone: phone, address: address,userType: 1,context: context);
             }
           }
-        if(state is RegisterUserMarketSuccessState)
-        {
 
-          if(state.registerModel.state!)
-          {
-            ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(Text(
-              '${state.registerModel.message}',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16
-              ),
-            ),Colors.green, Duration(seconds: 2)));
-          }
-          else
-          {
-            ScaffoldMessenger.of(context).showSnackBar(buildSnackBar( Text(
-              ' ${state.registerModel.message} تأكد من البيانات المدخلة ',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16
-              ),
-            ), Colors.red, Duration(seconds: 3),));
-          }
-        }
       },
       builder: (context,state)
       {
