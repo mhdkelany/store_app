@@ -11,13 +11,19 @@ import 'package:store/modules/choice_user.dart';
 import 'package:store/modules/login/login_cubit/states.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/components/constansts/constansts.dart';
+import 'package:store/shared/network/local/cache_helper.dart';
 import 'package:store/shared/network/remote/dio_helper.dart';
 
 import '../../../shared/network/end_point/end_point.dart';
 
 class LoginUserMarketCubit extends Cubit<LoginUserMarketStates>
 {
-  LoginUserMarketCubit():super(LoginUserMarketInitialState());
+  LoginUserMarketCubit():super(LoginUserMarketInitialState()){
+    if(location!=null)
+      {
+        getCurrentPosition();
+      }
+  }
   static LoginUserMarketCubit get(context)=>BlocProvider.of(context);
 
   bool isShow=true;
@@ -34,7 +40,7 @@ class LoginUserMarketCubit extends Cubit<LoginUserMarketStates>
       if(!value)
         {
           print('Location services are disabled.....');
-          return Future.error('Location services are disabled.');
+          emit(LocationDoNotOpenState());
         }
       if(value)
         {
@@ -44,9 +50,7 @@ class LoginUserMarketCubit extends Cubit<LoginUserMarketStates>
     }).catchError((error){});
 
      Geolocator.checkPermission().then((value) {
-      if(value==LocationPermission.denied)
-        {
-          print('Location services are disabled.');
+
           value=Geolocator.requestPermission().then((value) {
             if(value==LocationPermission.denied)
               {
@@ -54,25 +58,47 @@ class LoginUserMarketCubit extends Cubit<LoginUserMarketStates>
                 isDetermine=false;
                print('Location services are disabled.');
               }
+            else if(value==LocationPermission.always)
+              {
+                print('sss');
+                CacheHelper.putData(key: 'location', value: true).then((value) {
+                  getCurrentPosition();
+                  location=CacheHelper.getCacheData(key: 'location');
+                  emit(LocationOpenState());
+                });
+              }
+            else if(value==LocationPermission.whileInUse)
+              {
+                CacheHelper.putData(key: 'location', value: true);
+                print('mmm');
+                CacheHelper.putData(key: 'location', value: true).then((value) {
+                  getCurrentPosition();
+                  location=CacheHelper.getCacheData(key: 'location');
+                  emit(LocationOpenState());
+                });
+              }
+            else if(value==LocationPermission.unableToDetermine)
+              {
+                print('sssa');
+              }
           }).catchError((error){}) as LocationPermission;
-        }
+
       if (value == LocationPermission.deniedForever) {
-        // Permissions are denied forever, handle appropriately.
-        print('ddddd');
-        return Future.error(
-            'Location permissions are permanently denied, we cannot request permissions.');
+        emit(LocationState());
       }
     }).catchError((error){});
 
-       Geolocator.getCurrentPosition().then((value) {
-         getAddress(value);
-         print(value.longitude);
-         print(value.latitude);
-         emit(GetCurrentLocationSuccessState());
-       }).catchError((error) {
-         emit(GetCurrentLocationErrorState());
-       });
-
+  }
+  void getCurrentPosition()
+  {
+    Geolocator.getCurrentPosition().then((value) {
+      getAddress(value);
+      print(value.longitude);
+      print(value.latitude);
+      emit(GetCurrentLocationSuccessState());
+    }).catchError((error) {
+      emit(GetCurrentLocationErrorState());
+    });
   }
   Placemark? place;
   void getAddress(Position position)

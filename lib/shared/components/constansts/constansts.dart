@@ -11,6 +11,7 @@ import '../../network/local/cache_helper.dart';
 
 String? token='';
 String uId='';
+bool? location;
 
 void logOut(context)
 {

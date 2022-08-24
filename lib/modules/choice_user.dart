@@ -1,19 +1,22 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/modules/location_access_screen.dart';
 import 'package:store/modules/login/login_screen.dart';
 import 'package:store/modules/register/cubit.dart';
 import 'package:store/modules/register/states.dart';
 import 'package:store/shared/components/components.dart';
+import 'package:store/shared/network/local/cache_helper.dart';
 import 'package:store/shared/style/color.dart';
+import 'package:store/shared/components/constansts/constansts.dart';
 
 import '../shared/style/icon_broken.dart';
 
 class ChoiceUser extends StatelessWidget {
-  const ChoiceUser({Key? key}) : super(key: key);
-
+   ChoiceUser({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    location=CacheHelper.getCacheData(key: 'location');
     return Directionality(
       textDirection: TextDirection.rtl,
       child: BlocConsumer<RegisterUserMarketCubit,RegisterUserMarketStates>(
@@ -72,12 +75,10 @@ class ChoiceUser extends StatelessWidget {
                 SizedBox(
                   height: 10.0,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: Text(
-                    'يمكنك الان من تجربة التطبيق يرجى اختيار نوع المستخدم',
-                    style: Theme.of(context).textTheme.caption,
-                  ),
+                Text(
+                  'يمكنك الان من تجربة التطبيق يرجى اختيار نوع المستخدم',
+                  style: Theme.of(context).textTheme.caption,
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(
                   height: 25.0,
@@ -93,7 +94,10 @@ class ChoiceUser extends StatelessWidget {
                     child: MaterialButton(
                       onPressed: ()
                       {
-                        navigateTo(context, LoginScreen(isMarket: true,));
+                        if(location!=null)
+                          navigateTo(context, LoginScreen(isMarket: true,));
+                        else
+                          navigateTo(context, LocationAccessScreen(isMarket: true,));
                       },
                       height: 50,
                       color: primaryColor,
@@ -135,7 +139,10 @@ class ChoiceUser extends StatelessWidget {
                     child: MaterialButton(
                       onPressed: ()
                       {
-                        navigateTo(context, LoginScreen(isMarket: false,));
+                        if(location!=null)
+                          navigateTo(context, LoginScreen(isMarket: false,));
+                        else
+                          navigateTo(context, LocationAccessScreen(isMarket: false,));
                       },
                       height: 50,
                       color: Colors.grey[200],

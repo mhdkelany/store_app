@@ -154,17 +154,23 @@ var searchController=TextEditingController();
                 backgroundImage: imageProvider,
               ),
             ),
-            placeholder: (context,url)=>CircleAvatar(
-              radius: 30,
-              child: ShimmerWidget.circular(height: 70,width: 70,
+            placeholder: (context,url)=>Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CircleAvatar(
+                radius: 30,
+                child: ShimmerWidget.circular(height: 70,width: 70,
+                ),
               ),
             ),
-            errorWidget: (context,url,error)=>CircleAvatar(
-              backgroundColor: Colors.grey[300],
-              radius: 25,
-              child: Icon(
-                Icons.refresh_outlined,
-                color: Colors.grey[400],
+            errorWidget: (context,url,error)=>Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CircleAvatar(
+                backgroundColor: Colors.grey[300],
+                radius: 25,
+                child: Icon(
+                  Icons.refresh_outlined,
+                  color: Colors.grey[400],
+                ),
               ),
             ),
           ),

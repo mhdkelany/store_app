@@ -129,18 +129,18 @@ CategoriesScreen({required this.isHome});
   //     ),
   //   ),
   // );
-  Widget buildCategories1(context,index,Data data)=>Container(
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10)
-    ),
-    clipBehavior: Clip.antiAlias,
-    child: InkWell(
-      onTap: (){
-        StoreAppCubit.get(context).selectIndex(index);
-        StoreAppCubit.get(context).getProductIncludeCategory(data.idCate);
-        print(data.idCate);
-      },
+  Widget buildCategories1(context,index,Data data)=>InkWell(
+    onTap: (){
+      StoreAppCubit.get(context).selectIndex(index);
+      StoreAppCubit.get(context).getProductIncludeCategory(data.idCate);
+      print(data.idCate);
+    },
+    child: Container(
+      width: MediaQuery.of(context).size.width/2.5,
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10)
+        ),
         color: StoreAppCubit.get(context).selectedIndex==index?Colors.grey[200]:null,
         elevation: 4,
         clipBehavior: Clip.antiAlias,
@@ -173,12 +173,15 @@ CategoriesScreen({required this.isHome});
                       child: ShimmerWidget.circular(height: 70,width: 70,
                       ),
                     ),
-                    errorWidget: (context,url,error)=>CircleAvatar(
-                      backgroundColor: Colors.grey[300],
-                      radius: 42,
-                      child: Icon(
-                        Icons.refresh_outlined,
-                        color: Colors.grey[400],
+                    errorWidget: (context,url,error)=>Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.grey[300],
+                        radius: 42,
+                        child: Icon(
+                          Icons.refresh_outlined,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   ),
@@ -187,12 +190,15 @@ CategoriesScreen({required this.isHome});
               SizedBox(
                 height: 20.0,
               ),
-              Text(
-                '${data.name}',
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: Colors.black,
-                  fontFamily: 'tajawal-light'
+              Expanded(
+                child: Text(
+                  '${data.name}',
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.black,
+                    fontFamily: 'tajawal-light'
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],

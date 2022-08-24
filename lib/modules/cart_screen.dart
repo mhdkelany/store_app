@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -9,6 +10,8 @@ import 'package:store/modules/map_change_screen.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/style/color.dart';
 import 'package:store/shared/style/icon_broken.dart';
+
+import '../shared/components/constansts/shimmer_widget.dart';
 
 class CartScreen extends StatelessWidget {
 int ?index2;
@@ -288,16 +291,36 @@ CartScreen({ this.index2});
         Row(
           crossAxisAlignment:CrossAxisAlignment.start,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  image: DecorationImage(fit: BoxFit.cover,
-                    image: NetworkImage('https://ibrahim-store.com/api/images/${model.image}'),
-                  )
+            CachedNetworkImage(
+              imageUrl:'https://ibrahim-store.com/api/images/${model.image}',
+              imageBuilder: (context,imageProvider)=> Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    image: DecorationImage(fit: BoxFit.cover,
+                      image: imageProvider,
+                    )
+                ),
+                height: 60,
+                width: 60,
               ),
-              height: 50,
-              width: 50,
+              placeholder: (context,url)=>Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.grey[300]
+                ),
+                width: 60,
+                height: 60,
+              ),
+              errorWidget: (context,url,error)=>CircleAvatar(
+                backgroundColor: Colors.grey[300],
+                radius: 25,
+                child: Icon(
+                  Icons.refresh_outlined,
+                  color: Colors.grey[400],
+                ),
+              ),
             ),
+
             SizedBox(
               width: 10.0,
             ),

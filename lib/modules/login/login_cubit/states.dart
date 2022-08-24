@@ -30,3 +30,5 @@ class GetTokenErrorState extends LoginUserMarketStates{}
 class GetTokenMessagingErrorState extends LoginUserMarketStates{}
 
 class LocationState extends LoginUserMarketStates{}
+class LocationOpenState extends LoginUserMarketStates{}
+class LocationDoNotOpenState extends LoginUserMarketStates{}

@@ -34,14 +34,10 @@ class LoginScreen extends StatelessWidget {
       builder: (BuildContext context) {
 
         return BlocProvider (
-          create: (BuildContext context) =>LoginUserMarketCubit()..determinePosition()..timeFinish(),
+          create: (BuildContext context) =>LoginUserMarketCubit()..timeFinish(),
           child: BlocConsumer<LoginUserMarketCubit,LoginUserMarketStates>(
             listener: (context, state)
             {
-              if(state is LocationState)
-              {
-                navigateToEnd(context, ChoiceUser());
-              }
               if(state is CheckSocketState)
                 {
                   ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(Text('لا يوجد اتصال بالإنترنت'), Colors.amber, Duration(seconds: 5)));
@@ -198,7 +194,7 @@ class LoginScreen extends StatelessWidget {
                                                 ],
                                               ),
                                              onPressed: () {
-                                               LoginUserMarketCubit.get(context).determinePosition();
+                                               LoginUserMarketCubit.get(context).getCurrentPosition();
                                              }
                                             ),
                                           ),
