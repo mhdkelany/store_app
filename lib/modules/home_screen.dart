@@ -27,9 +27,7 @@ import 'package:store/shared/style/icon_broken.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-
-
+    print(MediaQuery.of(context).size.height);
     return BlocConsumer<StoreAppCubit,StoreAppStates>(
       listener: (context, state)
       {
@@ -136,8 +134,9 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(height: 10,),
         Container(
-          height: MediaQuery.of(context).size.height*0.15,
+          height: 120.32,
           child: ListView.separated(
             physics: BouncingScrollPhysics(),
               scrollDirection:Axis.horizontal ,
@@ -212,7 +211,7 @@ class HomeScreen extends StatelessWidget {
             shrinkWrap: true,
             separatorBuilder: (context, index)=>SizedBox(height: 5,),
             itemBuilder: (context, index)=>buildNewProducts(context,StoreAppCubit.get(context).homeModel!.products[index],index),
-          itemCount: StoreAppCubit.get(context).homeModel!.products.length,
+          itemCount: StoreAppCubit.get(context).homeModel!.products.length>=15?15:StoreAppCubit.get(context).homeModel!.products.length,
         ),
       ],
     ),
@@ -436,59 +435,63 @@ class HomeScreen extends StatelessWidget {
       StoreAppCubit.get(context).selectIndex(index);
       print(model.idCate);
     },
-    child: Column(
-      children: [
-        Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
+    child: Container(
+      width: MediaQuery.of(context).size.width/5,
+      child: Column(
+        children: [
+          Stack(
+            alignment: AlignmentDirectional.center,
+            children: [
 
-            Stack(
-              alignment: AlignmentDirectional.center,
-              children: [
-                CircleAvatar(
-                  radius: 36,
-                  backgroundColor: primaryColor,
-                ),
-                CircleAvatar(
-                  radius: 33,
-                  backgroundColor: Colors.white,
-                ),
-              ],
-            ),
-            CachedNetworkImage(
-              cacheManager: StoreAppCubit.get(context).cacheManager,
-              key: UniqueKey(),
-              imageUrl:'${model.image}',
-              imageBuilder: (context,imageProvider)=>CircleAvatar(
-                radius: 30,
-                backgroundImage: imageProvider,
+              Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  CircleAvatar(
+                    radius: 36,
+                    backgroundColor: primaryColor,
+                  ),
+                  CircleAvatar(
+                    radius: 33,
+                    backgroundColor: Colors.white,
+                  ),
+                ],
               ),
-              placeholder: (context,url)=>CircleAvatar(
-                radius: 30,
-                child: ShimmerWidget.circular(height: 70,width: 70,
+              CachedNetworkImage(
+                cacheManager: StoreAppCubit.get(context).cacheManager,
+                key: UniqueKey(),
+                imageUrl:'${model.image}',
+                imageBuilder: (context,imageProvider)=>CircleAvatar(
+                  radius: 30,
+                  backgroundImage: imageProvider,
+                ),
+                placeholder: (context,url)=>CircleAvatar(
+                  radius: 30,
+                  child: ShimmerWidget.circular(height: 70,width: 70,
+                  ),
+                ),
+                errorWidget: (context,url,error)=>CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.grey[300],
+                  child: Icon(
+                    Icons.refresh_outlined,
+                    color: Colors.grey,
+                  ),
                 ),
               ),
-              errorWidget: (context,url,error)=>CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.grey[300],
-                child: Icon(
-                  Icons.refresh_outlined,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-
-
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-            '${model.name}',
-            style: Theme.of(context).textTheme.subtitle1
-        ),
-      ],
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+              '${model.name}',
+              style: Theme.of(context).textTheme.subtitle1,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     ),
   );
 

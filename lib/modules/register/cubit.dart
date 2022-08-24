@@ -1,4 +1,3 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +6,10 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:store/models/register_model.dart';
-import 'package:store/models/user_data_model.dart';
 import 'package:store/modules/choice_user.dart';
 import 'package:store/modules/register/states.dart';
 import 'package:store/shared/components/components.dart';
+import 'package:store/shared/components/constansts/constansts.dart';
 import 'package:store/shared/network/end_point/end_point.dart';
 
 import '../../shared/network/remote/dio_helper.dart';
@@ -146,31 +145,36 @@ class RegisterUserMarketCubit extends Cubit<RegisterUserMarketStates> {
     required String phone,
     required String address,
    required BuildContext context
-  })
+  })async
   {
-    emit(RegisterUserMarketLoadingState());
-    DioHelper.postData(
-      url: Register,
-      data: {
-        'password':password,
-        'name':name,
-        'phone':phone,
-        'email':'mmhd@djjsssjfsssssss',
-        'lng':lang,
-        'lat':lat,
-        'user_type':userType,
-        'address':address,
-      },
-    ).then((value) {
-      model= RegisterModel.fromJson(value.data);
-      navigateToEnd(context, ChoiceUser());
-      print(value.data);
-      emit(RegisterUserMarketSuccessState(model!));
-    }).catchError((error){
-      print(error.toString());
-      emit(RegisterUserMarketErrorState());
-
-    });
+    if(await checkConnection()) {
+      emit(RegisterUserMarketLoadingState());
+      DioHelper.postData(
+        url: Register,
+        data: {
+          'password': password,
+          'name': name,
+          'phone': phone,
+          'email': 'mmhd@djjsssjfsssssss',
+          'lng': lang,
+          'lat': lat,
+          'user_type': userType,
+          'address': address,
+        },
+      ).then((value) {
+        model = RegisterModel.fromJson(value.data);
+        navigateToEnd(context, ChoiceUser());
+        print(value.data);
+        emit(RegisterUserMarketSuccessState(model!));
+      }).catchError((error) {
+        print(error.toString());
+        emit(RegisterUserMarketErrorState());
+      });
+    }
+    else
+      {
+        emit(CheckConnectionState());
+      }
   }
   bool isPrimaryColor=false;
   void changeColor()
@@ -213,62 +217,71 @@ class RegisterUserMarketCubit extends Cubit<RegisterUserMarketStates> {
   String messageError='';
   verifiedPhone(String phone)async
   {
-    emit(VerifiedPhoneLoadingState());
-    try {
-      await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+962${phone}',
-        verificationCompleted: (PhoneAuthCredential credential) {},
-        verificationFailed: (FirebaseAuthException e) {
-          //ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(Text('${e.code}'), Colors.red, Duration(seconds: 3)));
-          //RegisterUserMarketCubit.get(context).changeLoading();
-          isLoading = false;
-          messageError = e.message ?? 'error';
-          emit(VerifiedPhoneErrorState());
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          // RegisterUserMarketCubit.get(context).changeLoading();
-          //navigateTo(context, VerifiedScreen(verificationId: verificationId,password: passwordController.text, name: nameController.text, phone:phoneController.text, address: cityController.text,isTimeOut: false,));
-          verificationIdd = verificationId;
-          isLoading = false;
-          emit(VerifiedPhoneSuccessState());
-        },
-        timeout: Duration(seconds: 60),
-        codeAutoRetrievalTimeout: (String verificationId) {
-          isLoading = false;
-          emit(VerifiedPhoneRetrievalState());
-          //navigateTo(context, VerifiedScreen(verificationId: verificationId,password: passwordController.text, name: nameController.text, phone:phoneController.text, address: cityController.text,isTimeOut: true));
-        },
-      );
-    }on FirebaseAuthException catch(e)
-    {
-      messageError = e.code ?? 'error';
-      print(messageError);
-      emit(VerifiedPhoneErrorState());
+    if(await checkConnection()) {
+      emit(VerifiedPhoneLoadingState());
+      try {
+        await FirebaseAuth.instance.verifyPhoneNumber(
+          phoneNumber: '+962${phone}',
+          verificationCompleted: (PhoneAuthCredential credential) {},
+          verificationFailed: (FirebaseAuthException e) {
+            //ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(Text('${e.code}'), Colors.red, Duration(seconds: 3)));
+            //RegisterUserMarketCubit.get(context).changeLoading();
+            isLoading = false;
+            messageError = e.message ?? 'error';
+            emit(VerifiedPhoneErrorState());
+          },
+          codeSent: (String verificationId, int? resendToken) {
+            // RegisterUserMarketCubit.get(context).changeLoading();
+            //navigateTo(context, VerifiedScreen(verificationId: verificationId,password: passwordController.text, name: nameController.text, phone:phoneController.text, address: cityController.text,isTimeOut: false,));
+            verificationIdd = verificationId;
+            isLoading = false;
+            emit(VerifiedPhoneSuccessState());
+          },
+          timeout: Duration(seconds: 100),
+          codeAutoRetrievalTimeout: (String verificationId) {
+            isLoading = false;
+            emit(VerifiedPhoneRetrievalState());
+            //navigateTo(context, VerifiedScreen(verificationId: verificationId,password: passwordController.text, name: nameController.text, phone:phoneController.text, address: cityController.text,isTimeOut: true));
+          },
+        );
+      } on FirebaseAuthException catch (e) {
+        messageError ='يوجد خطأ في اﻷتصال الرجاء إعادة المحاولة لاحقاً';
+        print(messageError);
+        emit(VerifiedPhoneErrorState());
+      }
     }
+    else
+      {
+        emit(CheckConnectionState());
+      }
   }
   FirebaseAuth auth=FirebaseAuth.instance;
   bool isVerified=true;
   authPhone({required String verificationId,required String opt,required String password,required String name,required String phone,required String address,required BuildContext context})async
   {
-    isVerified=true;
-    emit(AuthPhoneLoadingState());
-    try
-    {
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: opt);
-      await auth.signInWithCredential(credential);
-    }on FirebaseAuthException catch(e)
-    {
-      isVerified=false;
-      messageError=e.code;
-      emit(AuthPhoneErrorState());
-      //ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(Text('${e.code}'), Colors.red, Duration(seconds: 3)));
+    if(await checkConnection()) {
+      isVerified = true;
+      emit(AuthPhoneLoadingState());
+      try {
+        PhoneAuthCredential credential = PhoneAuthProvider.credential(
+            verificationId: verificationId, smsCode: opt);
+        await auth.signInWithCredential(credential);
+      } on FirebaseAuthException catch (e) {
+        isVerified = false;
+        messageError = e.code;
+        emit(AuthPhoneErrorState());
+        //ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(Text('${e.code}'), Colors.red, Duration(seconds: 3)));
+      }
+      if (auth.currentUser != null && isVerified) {
+        print(auth.currentUser);
+        emit(AuthPhoneSuccessState());
+        // RegisterUserMarketCubit.get(context).createUser(password: password, name: name, phone: phone, address: address,userType: 1);
+      }
     }
-    if(auth.currentUser!=null&&isVerified)
-    {
-      print(auth.currentUser);
-      emit(AuthPhoneSuccessState());
-     // RegisterUserMarketCubit.get(context).createUser(password: password, name: name, phone: phone, address: address,userType: 1);
-    }
+    else
+      {
+        emit(CheckConnectionState());
+      }
   }
 
 }

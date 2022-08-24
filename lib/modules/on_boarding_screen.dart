@@ -151,6 +151,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             color: Colors.grey,
             fontSize: 16.0
         ),
+        textAlign: TextAlign.center,
       ),
       SizedBox(
         height: 30,

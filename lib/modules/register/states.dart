@@ -39,3 +39,5 @@ class VerifiedPhoneRetrievalState extends RegisterUserMarketStates{}
 class AuthPhoneSuccessState extends RegisterUserMarketStates{}
 class AuthPhoneLoadingState extends RegisterUserMarketStates{}
 class AuthPhoneErrorState extends RegisterUserMarketStates{}
+
+class CheckConnectionState extends RegisterUserMarketStates{}
