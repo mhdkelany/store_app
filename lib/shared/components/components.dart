@@ -1,5 +1,6 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:store/shared/components/constansts/shimmer_widget.dart';
 import 'package:store/shared/style/color.dart';
 import 'package:store/shared/style/route_manager.dart';
 
@@ -130,3 +131,88 @@ buildDialog(context,StoreAppStates state)=> showDialog(context: context, builder
     }, child: Text('Ok'))
   ],
 ));
+Widget buildText(
+    {required String text,
+      TextStyle? textStyle,
+      int? lines,
+      TextDirection? textDirection,
+      TextAlign? textAlign,
+    }) =>
+    Text('$text',
+      style: textStyle,
+      maxLines: lines,
+      textAlign: textAlign,
+      textDirection: textDirection,
+    );
+Widget buildShimmer(context)=>Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      decoration:BoxDecoration(
+          borderRadius: BorderRadius.circular(20)
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: ShimmerWidget.rectangular(height: 200),
+    ),
+    SizedBox(
+      height: 15,
+    ),
+    Container(
+      margin: EdgeInsets.only(right: 10),
+      child:ShimmerWidget.rectangular(height: 20,width:MediaQuery.of(context).size.height*0.18 ,) ,
+    ),
+    SizedBox(
+      height: 15,
+    ),
+    Container(
+      height: MediaQuery.of(context).size.height*0.18,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context,index)=>Column(
+          children: [
+            Container(
+              child: ShimmerWidget.circular(height: 70, width: 70 ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              child: ShimmerWidget.rectangular(height: 8,width: MediaQuery.of(context).size.width*0.15,),
+            ),
+          ],
+        ),
+        itemCount: 10,
+        separatorBuilder: (context,index)=>SizedBox(width: 10,),
+      ),
+    ),
+    SizedBox(
+      height: 15,
+    ),
+    Container(
+      margin: EdgeInsets.only(right: 10),
+      child:ShimmerWidget.rectangular(height: 20,width:MediaQuery.of(context).size.height*0.18 ,) ,
+    ),
+    SizedBox(
+      height: 15,
+    ),
+    Container(
+      height: MediaQuery.of(context).size.height*0.11 ,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context,index)=>Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15)
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: ShimmerWidget.rectangular(height: MediaQuery.of(context).size.height*0.11,width: MediaQuery.of(context).size.width*0.30,),
+        ),
+        itemCount: 10,
+        separatorBuilder: (context,index)=>SizedBox(width: 10,),
+      ),
+    ),
+  ],
+);
+
