@@ -6,7 +6,7 @@ class DioHelper
   {
     dio=Dio(
         BaseOptions(
-          baseUrl: 'https://ibrahim-store.com/api_old_09_10/',
+          baseUrl: 'https://ibrahim-store.com/api/',
           receiveDataWhenStatusError: true,
           connectTimeout: 60*1000,
           receiveTimeout: 60*1000
