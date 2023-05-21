@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/modules/auth/re_password/model/check_phone_number_model.dart';
+import 'package:store/modules/auth/re_password/model/re_password_model.dart';
 import 'package:store/modules/auth/re_password/re_password_cubit/states.dart';
 import 'package:store/shared/components/constansts/constansts.dart';
+import 'package:store/shared/network/end_point/end_point.dart';
 import 'package:store/shared/network/remote/dio_helper.dart';
 
 class RePasswordCubit extends Cubit<RePasswordStates> {
@@ -10,36 +12,57 @@ class RePasswordCubit extends Cubit<RePasswordStates> {
 
   static RePasswordCubit get(context) => BlocProvider.of(context);
   CheckPhoneNumberModel? checkPhoneNumberModel;
+
   void checkPhoneNumber(String phone) async {
     emit(RePasswordCheckPhoneNumberLoadingState());
     if (await checkConnection()) {
       DioHelper.postData(
-        url: 'send_code.php',
-        data: {
-          'email':phone
-        },
-      )
-          .then(
-            (value)
-        {
-          checkPhoneNumberModel=CheckPhoneNumberModel.fromJson(value.data);
+        url: SEND_CODE,
+        data: {'email': phone},
+      ).then(
+        (value) {
+          checkPhoneNumberModel = CheckPhoneNumberModel.fromJson(value.data);
           emit(RePasswordCheckPhoneNumberSuccessState(checkPhoneNumberModel!));
         },
-          )
-          .catchError(
-            (error)
-        {
+      ).catchError(
+        (error) {
           emit(RePasswordCheckPhoneNumberErrorState(error.toString()));
         },
+      );
+    }
+  }
+
+  RePasswordModel? rePasswordModel;
+
+  void rePassword({required String phone, required String password}) async {
+    emit(RePasswordLoadingState());
+    if (await checkConnection()) {
+      DioHelper.postData(
+        url: RE_PASSWORD,
+        data: {
+          'email': phone,
+          'password': password,
+        },
+      ).then(
+        (value) {
+          rePasswordModel = RePasswordModel.fromJson(value.data);
+          emit(RePasswordSuccessState());
+        },
+      ).catchError(
+        (error) {
+          emit(
+            RePasswordErrorState(error.toString()),
           );
+        },
+      );
     }
   }
 
   String verificationIdd = '';
-  String messageError = '';
   bool rePasswordIsLoading = false;
-  FirebaseAuth rePasswordAuth=FirebaseAuth.instance;
-  rePasswordVerifiedPhone(String phone) async {
+  FirebaseAuth rePasswordAuth = FirebaseAuth.instance;
+
+  Future rePasswordVerifiedPhone(String phone) async {
     if (await checkConnection()) {
       emit(RePasswordVerifiedPhoneNumberLoadingState());
       try {
@@ -48,9 +71,8 @@ class RePasswordCubit extends Cubit<RePasswordStates> {
           verificationCompleted: (PhoneAuthCredential credential) {},
           verificationFailed: (FirebaseAuthException e) {
             rePasswordIsLoading = false;
-            messageError = e.message ?? 'error';
             print(e.message);
-            emit(RePasswordVerifiedPhoneNumberErrorState());
+            emit(RePasswordVerifiedPhoneNumberWrongState(e.message!));
           },
           codeSent: (String verificationId, int? resendToken) {
             verificationIdd = verificationId;
@@ -60,21 +82,18 @@ class RePasswordCubit extends Cubit<RePasswordStates> {
           timeout: Duration(seconds: 100),
           codeAutoRetrievalTimeout: (String verificationId) {
             rePasswordIsLoading = false;
-            // emit(VerifiedPhoneRetrievalState());
           },
         );
       } on FirebaseAuthException catch (e) {
-        messageError = 'يوجد خطأ في اﻷتصال الرجاء إعادة المحاولة لاحقاً';
-        print(messageError);
-        emit(RePasswordVerifiedPhoneNumberErrorState());
+        emit(RePasswordVerifiedPhoneNumberErrorState(e.toString()));
       }
     }
   }
-  bool isVerified=true;
 
-  authPhone({required String opt})async
-  {
-    if(await checkConnection()) {
+  bool isVerified = true;
+
+  authPhone({required String opt}) async {
+    if (await checkConnection()) {
       isVerified = true;
       emit(RePasswordAuthPhoneLoadingState());
       try {
@@ -83,14 +102,11 @@ class RePasswordCubit extends Cubit<RePasswordStates> {
         await rePasswordAuth.signInWithCredential(credential);
       } on FirebaseAuthException catch (e) {
         isVerified = false;
-        messageError = e.code;
-        emit(RePasswordAuthPhoneErrorState());
-        //ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(Text('${e.code}'), Colors.red, Duration(seconds: 3)));
+        emit(RePasswordAuthPhoneErrorState(e.message!));
       }
       if (rePasswordAuth.currentUser != null && isVerified) {
         print(rePasswordAuth.currentUser);
         emit(RePasswordAuthPhoneSuccessState());
-        // RegisterUserMarketCubit.get(context).createUser(password: password, name: name, phone: phone, address: address,userType: 1);
       }
     }
   }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
+import 'package:store/modules/order/cubit/order_cubit.dart';
 
 class MapChangeScreen extends StatelessWidget {
   var searchController=TextEditingController();
@@ -40,8 +41,8 @@ class MapChangeScreen extends StatelessWidget {
                         }
                         if(StoreAppCubit.get(context).isBill)
                           {
-                            StoreAppCubit.get(context).latBill=pos.target.latitude;
-                            StoreAppCubit.get(context).lngBill=pos.target.longitude;
+                            OrderCubit.get(context).latBill=pos.target.latitude;
+                            OrderCubit.get(context).lngBill=pos.target.longitude;
                           }
                         print(StoreAppCubit.get(context).lat);
                       },

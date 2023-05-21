@@ -9,6 +9,7 @@ import 'package:store/modules/auth/login/login_cubit/states.dart';
 import 'package:store/modules/auth/re_password/screens/check_phone_number_screen.dart';
 import 'package:store/modules/auth/register/cubit.dart';
 import 'package:store/modules/auth/register/register_screen.dart';
+import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
 import 'package:store/modules/main_screen.dart';
 
 import 'package:store/modules/zoom_drawer_screen.dart';
@@ -70,7 +71,7 @@ class LoginScreen extends StatelessWidget {
 
                       token = state.dataModel.token;
                       StoreAppCubit.get(context).getProfile(context);
-                      StoreAppCubit.get(context).getCategories();
+                      CategoriesAndFavoriteCubit.get(context).getCategories();
                     });
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(
@@ -94,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                       CacheHelper.putData(key: 'isSailing', value: true);
                       token = state.dataModel.token;
                       StoreAppCubit.get(context).getProfile(context);
-                      StoreAppCubit.get(context).getCategories();
+                      CategoriesAndFavoriteCubit.get(context).getCategories();
                     });
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(

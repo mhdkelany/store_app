@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
 import 'package:store/models/home_model.dart';
+import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
 import 'package:store/modules/home/widgets/build_categories.dart';
 import 'package:store/modules/home/widgets/build_new_products.dart';
 import 'package:store/modules/home/widgets/build_top_sailing.dart';
@@ -38,7 +39,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state)
       {
         return  ConditionalBuilder(
-          condition: StoreAppCubit.get(context).homeModel!=null&&StoreAppCubit.get(context).categoriesModel!=null,
+          condition: StoreAppCubit.get(context).homeModel!=null&&CategoriesAndFavoriteCubit.get(context).categoriesModel!=null,
           builder: (context){
             if(StoreAppCubit.get(context).homeModel!.products.length==0)
               {
@@ -123,9 +124,9 @@ class HomeScreen extends StatelessWidget {
           child: ListView.separated(
             physics: BouncingScrollPhysics(),
               scrollDirection:Axis.horizontal ,
-              itemBuilder:(context, index)=>BuildCategories(context: context,model: StoreAppCubit.get(context).categoriesModel!.data[index],index: index) ,
+              itemBuilder:(context, index)=>BuildCategories(context: context,model: CategoriesAndFavoriteCubit.get(context).categoriesModel!.data[index],index: index) ,
               separatorBuilder: (context, index)=>SizedBox(width: 15.0),
-              itemCount: StoreAppCubit.get(context).categoriesModel!.data.length
+              itemCount: CategoriesAndFavoriteCubit.get(context).categoriesModel!.data.length
           ),
         ),
         Padding(

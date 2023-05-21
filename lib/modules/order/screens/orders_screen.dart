@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
-import 'package:store/modules/order_details_screen.dart';
+import 'package:store/modules/order/screens/order_details_screen.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/style/color.dart';
 

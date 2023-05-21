@@ -1,16 +1,15 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/modules/auth/login/login_screen.dart';
+import 'package:store/modules/auth/register/states.dart';
 import 'package:store/modules/location_access_screen.dart';
-import 'package:store/modules/login/login_screen.dart';
-import 'package:store/modules/register/cubit.dart';
-import 'package:store/modules/register/states.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/network/local/cache_helper.dart';
 import 'package:store/shared/style/color.dart';
 import 'package:store/shared/components/constansts/constansts.dart';
 
 import '../shared/style/icon_broken.dart';
+import 'auth/register/cubit.dart';
 
 class ChoiceUser extends StatelessWidget {
    ChoiceUser({Key? key}) : super(key: key);

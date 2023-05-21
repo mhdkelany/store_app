@@ -45,11 +45,11 @@ class Products
   String? name;
   String? shortDescription;
   String? longDescription;
-  dynamic? price;
-  String? quantity;
+  dynamic price;
+  dynamic quantity;
   String? discount;
   String? image;
-  dynamic? inFavorites;
+  dynamic inFavorites;
   Products.fromJson(dynamic json)
   {
     name=json['name'];

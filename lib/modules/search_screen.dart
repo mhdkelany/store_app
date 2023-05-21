@@ -5,11 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
 import 'package:store/models/home_model.dart';
-import 'package:store/modules/product_details_screen.dart';
+import 'package:store/modules/order/screens/product_details_screen.dart';
 import 'package:store/shared/components/components.dart';
+import 'package:store/shared/components/constansts/string_const.dart';
 import 'package:store/shared/style/icon_broken.dart';
 
-import '../models/search_model.dart';
 import '../shared/components/constansts/shimmer_widget.dart';
 import '../shared/style/color.dart';
 
@@ -146,7 +146,7 @@ var searchController=TextEditingController();
         mainAxisSize: MainAxisSize.min,
         children: [
           CachedNetworkImage(
-            imageUrl:'https://ibrahim-store.com/api/images/${model.image}',
+            imageUrl:'$imageUrl${model.image}',
             imageBuilder: (context,imageProvider)=>Padding(
               padding: const EdgeInsets.all(10.0),
               child: CircleAvatar(

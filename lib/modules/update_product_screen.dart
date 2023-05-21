@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/layout/cubit/states.dart';
 import 'package:store/models/home_model.dart';
+import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
 
 import '../layout/cubit/cubit.dart';
 import '../shared/components/components.dart';
@@ -97,7 +98,7 @@ class UpdateProductScreen extends StatelessWidget {
                         height: 15.0,
                       ),
                       DropdownButtonFormField<dynamic>(
-                        items:StoreAppCubit.get(context).categoriesModel!=null? StoreAppCubit.get(context).categoriesModel!.data.map((e) =>DropdownMenuItem(child: Text('${e.name}'),value:e.idCate ,onTap: (){print(e.idCate);},)).toList():[].map((e) => DropdownMenuItem(child: Text('$e'),value: e,)).toList(),
+                        items:CategoriesAndFavoriteCubit.get(context).categoriesModel!=null? CategoriesAndFavoriteCubit.get(context).categoriesModel!.data.map((e) =>DropdownMenuItem(child: Text('${e.name}'),value:e.idCate ,onTap: (){print(e.idCate);},)).toList():[].map((e) => DropdownMenuItem(child: Text('$e'),value: e,)).toList(),
                         onChanged: (value)
                         {
                           StoreAppCubit.get(context).choiceFromCategory(value);
@@ -113,7 +114,7 @@ class UpdateProductScreen extends StatelessWidget {
                         decoration: InputDecoration(
                             border: InputBorder.none
                         ),
-                        hint: Text(StoreAppCubit.get(context).categoriesModel!=null?'اختر القسم':'يوجد خطأ'),
+                        hint: Text(CategoriesAndFavoriteCubit.get(context).categoriesModel!=null?'اختر القسم':'يوجد خطأ'),
                         validator: (value)
                         {
 

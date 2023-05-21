@@ -1,17 +1,9 @@
-import 'dart:async';
-
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
-import 'package:store/layout/layout_screen.dart';
 import 'package:store/modules/choice_user.dart';
-import 'package:store/modules/login/login_screen.dart';
 import 'package:store/modules/on_boarding_screen.dart';
 import 'package:store/modules/zoom_drawer_screen.dart';
 import 'package:store/shared/network/local/cache_helper.dart';

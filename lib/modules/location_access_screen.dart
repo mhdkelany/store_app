@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:store/modules/login/login_cubit/cubit.dart';
-import 'package:store/modules/login/login_cubit/states.dart';
-import 'package:store/modules/login/login_screen.dart';
+import 'package:store/modules/auth/login/login_cubit/cubit.dart';
+import 'package:store/modules/auth/login/login_cubit/states.dart';
+import 'package:store/modules/auth/login/login_screen.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/style/color.dart';
 

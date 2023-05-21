@@ -35,7 +35,6 @@ List<Map> drawerItem=[
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
-
             body: Container(
               color: fourColor,
               child: Padding(

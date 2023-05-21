@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/models/home_model.dart';
-import 'package:store/modules/product_details_screen.dart';
+import 'package:store/modules/order/cubit/order_cubit.dart';
+import 'package:store/modules/order/screens/product_details_screen.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/components/constansts/shimmer_widget.dart';
 import 'package:store/shared/style/color.dart';
@@ -18,7 +19,7 @@ class BuildNewProducts extends StatelessWidget {
     return InkWell(
       onTap: (){
         navigateTo(context, ProductDetailsScreen(model: StoreAppCubit.get(context).homeModel!.products[index],index: index,));
-        StoreAppCubit.get(context).countQuantity=0;
+        OrderCubit.get(context).countQuantity=0;
         print(products.inFavorites);
       },
       child: Padding(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:store/modules/splash_screen.dart';
 
 class Routes extends PageRouteBuilder
 {

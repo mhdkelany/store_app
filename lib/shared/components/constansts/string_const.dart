@@ -14,3 +14,5 @@ const validationForAcceptPassword='كلمة المرور غير صحيحة';
 const didYouForgetPassword='هل نسيت كلمة المرور ؟';
 const url='https://ibrahim-store.com/api/';
 const imageUrl='https://ibrahim-store.com/api/images/';
+const rePasswordSuccessTitle='تغيير كلمة المرور';
+const rePasswordSuccessContain='تمت تغيير كلمة المرور بنجاح';

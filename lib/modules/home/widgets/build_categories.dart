@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:store/layout/cubit/cubit.dart';
-import 'package:store/models/categories_model.dart';
-import 'package:store/modules/categories_for_home_screen.dart';
+import 'package:store/modules/categoryandfavorite/models/categories_model.dart';
+import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
+import 'package:store/modules/categoryandfavorite/screens/categories_for_home_screen.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/components/constansts/shimmer_widget.dart';
 import 'package:store/shared/style/color.dart';
@@ -16,7 +17,7 @@ class BuildCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-         StoreAppCubit.get(context).getProductIncludeCategory(model.idCate);
+        CategoriesAndFavoriteCubit.get(context).getProductIncludeCategory(model.idCate);
         navigateTo(context, CategoriesForHomeScreen(title: 'ss',));
         StoreAppCubit.get(context).selectIndex(index);
         print(model.idCate);

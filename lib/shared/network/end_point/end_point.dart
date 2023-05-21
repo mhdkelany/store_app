@@ -16,3 +16,5 @@ const editPROFILE='edit_profile.php';
 String LOGIN='login.php';
 String Register='register.php';
 String HOME='home.php';
+String SEND_CODE='send_code.php';
+String RE_PASSWORD='repassword.php';

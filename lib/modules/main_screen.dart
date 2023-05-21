@@ -3,13 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
 import 'package:store/modules/add_product_screen.dart';
+import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
 import 'package:store/modules/drawer_screen.dart';
 import 'package:store/modules/main_merchant_screen.dart';
 import 'package:store/modules/profile_User_Screen.dart';
 import 'package:store/modules/quantity_is_null_screen.dart';
-import 'package:store/modules/zoom_drawer_screen.dart';
 import 'package:store/shared/components/components.dart';
-import 'package:store/shared/components/constansts/constansts.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -22,7 +21,7 @@ class MainScreen extends StatelessWidget {
         if(state is ConnectionSuccessState)
         {
           StoreAppCubit.get(context).getProfile(context);
-          StoreAppCubit.get(context).getCategories();
+          CategoriesAndFavoriteCubit.get(context).getCategories();
          // ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(Text('تم العودة للأتصال',style: TextStyle(),), Colors.green, Duration(seconds: 5)));
         }
         if(state is ConnectionErrorState)

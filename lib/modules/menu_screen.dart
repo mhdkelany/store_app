@@ -5,7 +5,7 @@ import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
 import 'package:store/models/menu_item.dart';
 import 'package:store/modules/call_me_screen.dart';
-import 'package:store/modules/orders_screen.dart';
+import 'package:store/modules/order/screens/orders_screen.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/components/constansts/constansts.dart';
 import 'package:store/shared/style/color.dart';

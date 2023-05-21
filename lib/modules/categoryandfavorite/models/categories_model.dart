@@ -14,7 +14,7 @@ class CategoriesModel
 class Data
 {
   String? name;
-  dynamic? idCate;
+  dynamic idCate;
   String? image;
   Data.fromJson(dynamic json)
   {

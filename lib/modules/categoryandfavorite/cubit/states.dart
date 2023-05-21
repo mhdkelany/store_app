@@ -1,0 +1,16 @@
+abstract class CategoriesAndFavoriteState {}
+class CategoriesAndFavoriteInitState extends CategoriesAndFavoriteState{}
+
+class StoreCategoriesSuccessState extends CategoriesAndFavoriteState{}
+class StoreCategoriesErrorState extends CategoriesAndFavoriteState{}
+
+class getProductIncludeCategorySuccessState extends CategoriesAndFavoriteState{}
+class getProductIncludeCategoryErrorState extends CategoriesAndFavoriteState{}
+
+class GetFavoritesSuccessState extends CategoriesAndFavoriteState{}
+class GetFavoritesLoadingState extends CategoriesAndFavoriteState{}
+class GetFavoritesErrorState extends CategoriesAndFavoriteState{}
+
+class GetSubOfCategorySuccessState extends CategoriesAndFavoriteState{}
+class GetSubOfCategoryLoadingState extends CategoriesAndFavoriteState{}
+class GetSubOfCategoryErrorState extends CategoriesAndFavoriteState{}

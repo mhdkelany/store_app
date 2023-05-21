@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:store/shared/style/color.dart';
-import 'color.dart';
-
 ThemeData darkMode=ThemeData(
 
     primaryColor: primaryColor,
     appBarTheme: AppBarTheme(
       titleSpacing: 20.0,
-      backwardsCompatibility: false,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: HexColor('333739'),
         statusBarIconBrightness: Brightness.light,
@@ -55,7 +52,6 @@ ThemeData lightMode=ThemeData(
     ),
     appBarTheme: AppBarTheme(
       titleSpacing: 20.0,
-      backwardsCompatibility: false,
       systemOverlayStyle: SystemUiOverlayStyle(
         // statusBarColor: Colors.white,
         // systemStatusBarContrastEnforced: true,
@@ -107,7 +103,6 @@ ThemeData lightModeFor=ThemeData(
     ),
     appBarTheme: AppBarTheme(
       titleSpacing: 20.0,
-      backwardsCompatibility: true,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: Colors.white,
         statusBarIconBrightness: Brightness.dark,

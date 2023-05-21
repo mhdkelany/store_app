@@ -18,21 +18,14 @@ class StoreHomeErrorState extends StoreAppStates
 
 }
 class SelectedIndexState extends StoreAppStates{}
-class StoreCategoriesSuccessState extends StoreAppStates{}
-class StoreCategoriesErrorState extends StoreAppStates{}
 
-class StoreAddQuantityToCartState extends StoreAppStates{}
-class StoreRemoveQuantityFromCartState extends StoreAppStates{}
 
-class StoreChangeButtonAddToCartShowState extends StoreAppStates{}
 
-class StoreAddItemIntoCartState extends StoreAppStates{}
 
-class RemoveAllCartItemState extends StoreAppStates {}
+
 
 class OpenWishScreenState extends StoreAppStates{}
 
-class GetTotalBillState extends StoreAppStates{}
 
 class ClearFromCacheState extends StoreAppStates{}
 
@@ -51,9 +44,7 @@ class GetProfileSuccessState extends StoreAppStates{}
 class GetProfileLoadingState extends StoreAppStates{}
 class GetProfileErrorState extends StoreAppStates{}
 
-class GetFavoritesSuccessState extends StoreAppStates{}
-class GetFavoritesLoadingState extends StoreAppStates{}
-class GetFavoritesErrorState extends StoreAppStates{}
+
 
 class ChangeFavoritesSuccessState extends StoreAppStates{}
 class ChangeFavoritesLoadingState extends StoreAppStates{}
@@ -73,14 +64,10 @@ class ChangeProfileSuccessState extends StoreAppStates
 class ChangeProfileLoadingState extends StoreAppStates{}
 class ChangeProfileErrorState extends StoreAppStates{}
 
-class getProductIncludeCategorySuccessState extends StoreAppStates{}
-class getProductIncludeCategoryErrorState extends StoreAppStates{}
 
-class ChangeProductIncludeCartState extends StoreAppStates{}
 
-class SendOrderSuccessState extends StoreAppStates{}
-class SendOrderLoadingState extends StoreAppStates{}
-class SendOrderErrorState extends StoreAppStates{}
+
+
 class ChoiceFromCategory extends StoreAppStates{}
 
 class ChoiceImageSuccessState extends StoreAppStates{}
@@ -114,7 +101,6 @@ class AnimateCameraState extends StoreAppStates{}
 
 class GetPlaceIdSuccessState extends StoreAppStates{}
 class GetPlaceIdErrorState extends StoreAppStates{}
-class RemoveFromCartState extends StoreAppStates{}
 
 class ConnectTrueState extends StoreAppStates{}
 class ConnectFalseState extends StoreAppStates{}
@@ -139,4 +125,7 @@ class GetOrdersForUserErrorState extends StoreAppStates{}
 class GetOrdersForUserDetailsSuccessState extends StoreAppStates{}
 class GetOrdersForUserDetailsLoadingState extends StoreAppStates{}
 class GetOrdersForUserDetailsErrorState extends StoreAppStates{}
+class ChangeBottomForMerchant extends StoreAppStates{}
+
+
 

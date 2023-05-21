@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/models/home_model.dart';
-import 'package:store/modules/product_details_screen.dart';
+import 'package:store/modules/order/cubit/order_cubit.dart';
+import 'package:store/modules/order/screens/product_details_screen.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/components/constansts/shimmer_widget.dart';
 import 'package:store/shared/style/color.dart';
@@ -19,10 +21,10 @@ class BuildTopSailing extends StatelessWidget {
       {
         print(index);
         navigateTo(context, ProductDetailsScreen(model: StoreAppCubit.get(context).homeModel!.top[index],index: index,));
-        StoreAppCubit.get(context).countQuantity=0;
+        OrderCubit.get(context).countQuantity=0;
       },
       child: Container(
-        width: MediaQuery.of(context).size.width*0.6,
+      //  width: MediaQuery.of(context).size.width*0.6,
         child: Card(
           elevation: 5,
           clipBehavior: Clip.antiAlias,
@@ -78,7 +80,9 @@ class BuildTopSailing extends StatelessWidget {
                         width: MediaQuery.of(context).size.width*0.30,
                         child: Text(
                           '${products.name} ' ,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                            fontSize: 14.sp
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -88,8 +92,10 @@ class BuildTopSailing extends StatelessWidget {
                       width: MediaQuery.of(context).size.width*0.33,
                       child: Text(
                         '${products.shortDescription}',
-                        style: Theme.of(context).textTheme.caption,
-                        maxLines: 2,
+                        style: Theme.of(context).textTheme.caption!.copyWith(
+                          fontSize: 14.sp
+                        ),
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -97,10 +103,10 @@ class BuildTopSailing extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width*0.30,
                       child: Text(
-                        '${products.price} د.أ ',
+                        '${double.tryParse(products.price)!.toStringAsFixed(2)} د.أ ',
                         style: TextStyle(
                             color: primaryColor,
-                            fontSize: 16
+                            fontSize: 14.sp
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
