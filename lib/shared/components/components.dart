@@ -232,37 +232,38 @@ Widget buildShimmer(context) => Column(
 
 Widget Loading(BuildContext context) => AnimatedContainer(
       duration: Duration(milliseconds: 800),
-  curve: Curves.fastLinearToSlowEaseIn,
-  child:Dialog(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-    elevation: 0.0,
-    backgroundColor: Colors.transparent,
-    child: Stack(
-      children: [
-        Center(
-          child: Container(
-            width: 150.w,
-            height: 150.h,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow:[
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10,
-                  offset: Offset(0,10),
-                ),
-              ],
-            ),
-            child: SpinKitDoubleBounce(
-              color: primaryColor,
-            ),
-          ),
+      curve: Curves.fastLinearToSlowEaseIn,
+      child: Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
         ),
-      ],
-    ),
-  ),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        child: Stack(
+          children: [
+            Center(
+              child: Container(
+                width: 150.w,
+                height: 150.h,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      offset: Offset(0, 10),
+                    ),
+                  ],
+                ),
+                child: SpinKitDoubleBounce(
+                  color: primaryColor,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
+

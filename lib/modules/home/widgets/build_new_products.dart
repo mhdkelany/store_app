@@ -6,7 +6,9 @@ import 'package:store/models/home_model.dart';
 import 'package:store/modules/order/cubit/order_cubit.dart';
 import 'package:store/modules/order/screens/product_details_screen.dart';
 import 'package:store/shared/components/components.dart';
+import 'package:store/shared/components/constansts/constansts.dart';
 import 'package:store/shared/components/constansts/shimmer_widget.dart';
+import 'package:store/shared/components/constansts/string_const.dart';
 import 'package:store/shared/style/color.dart';
 
 class BuildNewProducts extends StatelessWidget {
@@ -37,7 +39,7 @@ class BuildNewProducts extends StatelessWidget {
               CachedNetworkImage(
                 cacheManager: StoreAppCubit.get(context).cacheManager,
                 key: UniqueKey(),
-                imageUrl:'https://ibrahim-store.com/api/images/${products.image}',
+                imageUrl:'$imageUrl${products.image}',
                 imageBuilder: (context,imageProvider)=>Container(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height*0.3,
@@ -90,7 +92,7 @@ class BuildNewProducts extends StatelessWidget {
                             height: 5.0,
                           ),
                           Text(
-                            '${products.price}د.أ ',
+                            '${double.tryParse(products.price)!.toStringAsFixed(2)}د.أ ',
                             style: Theme.of(context).textTheme.caption!.copyWith(
                                 fontSize: 14.sp
                             ),
@@ -98,12 +100,12 @@ class BuildNewProducts extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           SizedBox(
-                            height: 5,
+                            height: 5.h,
                           ),
                         ],
                       ),
                     ),
-
+                    if(token!=null)
                     IconButton(onPressed: ()
                     {
                       StoreAppCubit.get(context).changeFavorites(products.idProduct!);

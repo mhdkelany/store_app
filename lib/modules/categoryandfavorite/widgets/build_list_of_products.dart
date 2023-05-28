@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
 import 'package:store/modules/order/cubit/order_cubit.dart';
 import 'package:store/shared/components/components.dart';
@@ -44,7 +45,7 @@ class BuildListOfProducts extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     buildText(
-                        text: 'د.أ ${CategoriesAndFavoriteCubit.get(context).categoryIncludeProduct!.products[index].price}',
+                        text: 'د.أ ${double.tryParse(CategoriesAndFavoriteCubit.get(context).categoryIncludeProduct!.products[index].price)!.toStringAsFixed(2)}',
                         textStyle: TextStyle(
                           color: Colors.red,
                           fontFamily: 'tajawal-light',
@@ -83,7 +84,7 @@ class BuildListOfProducts extends StatelessWidget {
                                     .idProduct!);
                             isExit=true;
                             OrderCubit.get(context).plus();
-                            inTheCart.addAll({generationFromCubit.idProduct!:true});
+                            inTheCart!.addAll({generationFromCubit.idProduct!:isExit});
                           }
                         }
 
@@ -91,7 +92,7 @@ class BuildListOfProducts extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
-                          color:inTheCart[CategoriesAndFavoriteCubit.get(context).categoryIncludeProduct!.products[index].idProduct]!?Colors.grey: Colors.blue[200],
+                          color: Colors.blue
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(5.8),

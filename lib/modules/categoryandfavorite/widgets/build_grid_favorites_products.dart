@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/models/home_model.dart';
 import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
@@ -36,87 +37,85 @@ class BuildGridFavoritesProducts extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.95,
-          decoration: BoxDecoration(
-              color: Colors.grey[200], borderRadius: BorderRadius.circular(20)),
-          clipBehavior: Clip.antiAlias,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CachedNetworkImage(
-                cacheManager: StoreAppCubit.get(context).cacheManager,
-                key: UniqueKey(),
-                imageUrl: '$imageUrl${data.image}',
-                imageBuilder: (context, imageProvider) => Image(
-                  image: imageProvider,
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  height: MediaQuery.of(context).size.height * 0.30,
-                  fit: BoxFit.cover,
-                ),
-                placeholder: (context, url) => Container(
-                  child: ShimmerWidget.rectangular(
+        child: Card(
+          elevation: 3,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20)
+          ),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.95,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CachedNetworkImage(
+                  cacheManager: StoreAppCubit.get(context).cacheManager,
+                  key: UniqueKey(),
+                  imageUrl: '$imageUrl${data.image}',
+                  imageBuilder: (context, imageProvider) => Image(
+                    image: imageProvider,
                     width: MediaQuery.of(context).size.width * 0.95,
                     height: MediaQuery.of(context).size.height * 0.30,
+                    fit: BoxFit.cover,
                   ),
-                ),
-                errorWidget: (context, url, error) => Container(
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  height: MediaQuery.of(context).size.height * 0.30,
-                  color: Colors.grey[300],
-                  child: Icon(
-                    Icons.refresh_outlined,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.25,
-                          child: Text(
-                            '${data.name}',
-                            style:
-                                TextStyle(fontSize: 16.0, color: primaryColor),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.25,
-                          child: Text(
-                            '${data.price} د.أ ',
-                            style: Theme.of(context).textTheme.caption,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
+                  placeholder: (context, url) => Container(
+                    child: ShimmerWidget.rectangular(
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      height: MediaQuery.of(context).size.height * 0.30,
                     ),
                   ),
-                  Spacer(),
-                  IconButton(
-                      onPressed: () {
-                        print(data.idProduct);
-                      },
-                      icon: Icon(
-                        IconBroken.Heart,
-                        color: StoreAppCubit.get(context)
-                                .isFavorite[data.idProduct]!
-                            ? Colors.red
-                            : Colors.grey,
-                      ))
-                ],
-              ),
-            ],
+                  errorWidget: (context, url, error) => Container(
+                    width: MediaQuery.of(context).size.width * 0.95,
+                    height: MediaQuery.of(context).size.height * 0.30,
+                    color: Colors.grey[300],
+                    child: Icon(
+                      Icons.refresh_outlined,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15.0,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${data.name}',
+                              style:
+                                  TextStyle(fontSize: 14.0.sp, color: primaryColor),
+                              maxLines: 1,
+                            ),
+                            Text(
+                              '${double.tryParse(data.price)!.toStringAsFixed(2)} د.أ ',
+                              style: Theme.of(context).textTheme.caption,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          print(data.idProduct);
+                        },
+                        icon: Icon(
+                          IconBroken.Heart,
+                          color: CategoriesAndFavoriteCubit.get(context)
+                                  .isFavorite[data.idProduct]!
+                              ? Colors.red
+                              : Colors.grey,
+                        ))
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

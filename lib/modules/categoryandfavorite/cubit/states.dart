@@ -3,6 +3,7 @@ class CategoriesAndFavoriteInitState extends CategoriesAndFavoriteState{}
 
 class StoreCategoriesSuccessState extends CategoriesAndFavoriteState{}
 class StoreCategoriesErrorState extends CategoriesAndFavoriteState{}
+class ChangeTgaState extends CategoriesAndFavoriteState{}
 
 class getProductIncludeCategorySuccessState extends CategoriesAndFavoriteState{}
 class getProductIncludeCategoryErrorState extends CategoriesAndFavoriteState{}

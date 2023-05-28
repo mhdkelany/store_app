@@ -82,6 +82,13 @@ class GetProductForUserSuccessState extends StoreAppStates
 }
 class GetProductForUserLoadingState extends StoreAppStates{}
 class GetProductForUserErrorState extends StoreAppStates{}
+class GetProductForUserAllSuccessState extends StoreAppStates
+{
+  ProductForUserModel productForUserModel;
+  GetProductForUserAllSuccessState(this.productForUserModel);
+}
+class GetProductForUserAllLoadingState extends StoreAppStates{}
+class GetProductForUserAllErrorState extends StoreAppStates{}
 
 class UpdateProductForUserSuccessState extends StoreAppStates{}
 class UpdateProductForUserLoadingState extends StoreAppStates{}
@@ -126,6 +133,13 @@ class GetOrdersForUserDetailsSuccessState extends StoreAppStates{}
 class GetOrdersForUserDetailsLoadingState extends StoreAppStates{}
 class GetOrdersForUserDetailsErrorState extends StoreAppStates{}
 class ChangeBottomForMerchant extends StoreAppStates{}
+
+class GetHomeWithoutTokenSuccessState extends StoreAppStates{}
+class GetHomeWithoutTokenLoadingState extends StoreAppStates{}
+class GetHomeWithoutTokenErrorState extends StoreAppStates{}
+class SearchForUserState extends StoreAppStates{}
+class ClearTextState extends StoreAppStates{}
+class StartSearchingState extends StoreAppStates{}
 
 
 

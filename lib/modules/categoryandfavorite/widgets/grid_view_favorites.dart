@@ -18,7 +18,7 @@ class GridViewFavorites extends StatelessWidget {
             crossAxisCount: 2,
             mainAxisSpacing: 2,
             crossAxisSpacing: 2,
-            childAspectRatio: MediaQuery.of(context).size.width/MediaQuery.of(context).size.height/0.85,
+            childAspectRatio: MediaQuery.of(context).size.width/MediaQuery.of(context).size.height/0.88,
             children: List.generate(
                 CategoriesAndFavoriteCubit.get(context).favoritesModel!.products.length, (index) => BuildGridFavoritesProducts(context:context,data:CategoriesAndFavoriteCubit.get(context).favoritesModel!.products[index],index:index)
             ),

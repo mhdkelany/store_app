@@ -4,23 +4,18 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:store/layout/cubit/states.dart';
-import 'package:store/modules/categoryandfavorite/models/categories_model.dart';
-import 'package:store/models/category_product_model.dart';
 import 'package:store/models/change_favorites_model.dart';
 import 'package:store/models/edit_profile_model.dart';
-import 'package:store/modules/categoryandfavorite/models/favorites_model.dart';
 import 'package:store/models/home_model.dart';
 import 'package:store/models/order_details_model.dart';
 import 'package:store/models/oredermodel.dart';
 import 'package:store/models/product_for_user_model.dart';
-import 'package:store/models/products_cart_model.dart';
 import 'package:store/models/search_model.dart';
 import 'package:store/models/user_data_model.dart';
 import 'package:store/models/wishes_model.dart';
@@ -28,7 +23,6 @@ import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
 import 'package:store/modules/categoryandfavorite/screens/categories_screen.dart';
 import 'package:store/modules/categoryandfavorite/screens/favorites_screen.dart';
 import 'package:store/modules/home/screen/home_screen.dart';
-import 'package:store/modules/manage_product/model/sub_category_model.dart';
 import 'package:store/modules/profile_screen.dart';
 import 'package:store/modules/uploade_wish_screen.dart';
 import 'package:store/shared/components/constansts/constansts.dart';
@@ -71,7 +65,7 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
 
   void changeBottomNav(int value, context) {
     if (value == 1) {
-      CategoriesAndFavoriteCubit.get(context).getProductIncludeCategory('1');
+      CategoriesAndFavoriteCubit.get(context).getProductIncludeCategory('1',isRefresh: true);
       selectIndex(0);
     }
     if (value == 3) CategoriesAndFavoriteCubit.get(context).getFavorites();
@@ -92,18 +86,30 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
 
   Map<String, bool> isFavorite = {};
 
-  void getHome() async {
+  int currentPageGetHome=1;
+  void getHome({bool isRefresh=false}) async {
     emit(StoreHomeLoadingState());
-    DioHelper.getData(url: HOME, query: {'Authorization': token}).then((value) {
-      //write favorite
-      homeModel = HomeModel.fromJson(value.data);
-      print(value.data);
-      emit(StoreHomeSuccessState(homeModel!));
-      homeModel!.products.forEach((element) {
-        isFavorite.addAll({
-          element.idProduct!: element.inFavorites!,
+    DioHelper.getData(url: HOME, query: {'Authorization': token,'page':currentPageGetHome}).then((value) {
+      if(isRefresh) {
+        homeModel = HomeModel.fromJson(value.data);
+        print(value.data);
+        emit(StoreHomeSuccessState(homeModel!));
+        homeModel!.products.forEach((element) {
+          isFavorite.addAll({
+            element.idProduct!: element.inFavorites!,
+          });
         });
-      });
+      }
+      else{
+        homeModel!.products.addAll(HomeModel.fromJson(value.data).products);
+        homeModel!.products.forEach((element) {
+          isFavorite.addAll({
+            element.idProduct!: element.inFavorites!,
+          });
+        });
+        emit(StoreHomeSuccessState(homeModel!));
+      }
+      currentPageGetHome++;
     }).catchError((error) {
       print(error.toString());
       emit(StoreHomeErrorState());
@@ -176,13 +182,14 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
           userInformation = UserInformation.fromJson(value.data);
           print(userInformation!.state);
           if (userInformation!.userType == 0) {
-            getProductForUser(context);
+            getAllProductForUser();
+            getProductForUser(context,isRefresh: true);
             print(userInformation!.lat);
           }
           emit(GetProfileSuccessState());
           if (userInformation!.userType == 1) {
             // getProductIncludeCategory('1');
-            getHome();
+            getHome(isRefresh: true);
           }
         }).catchError((error) {
           if (error.type == DioErrorType.connectTimeout) {
@@ -290,6 +297,7 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
     category = value;
     //emit(ChoiceFromCategory());
   }
+
   void choiceFromSubCategory(dynamic value) {
     category = value;
     //emit(ChoiceFromCategory());
@@ -313,17 +321,40 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
     productImage = null;
     emit(RemoveImageState());
   }
+  ProductForUserModel? productForUserAllModel;
+  void getAllProductForUser()
+  {
+    emit(GetProductForUserAllLoadingState());
+    DioHelper.postData(url: GET_PRODUCT_FOR_USER_ALL, data: {
+      'Authorization': token,
+    }).then((value) {
 
+      productForUserAllModel = ProductForUserModel.fromJson(value.data);
+        emit(GetProductForUserAllSuccessState(productForUserModel!));
+    }).catchError((error) {
+      print(error.toString());
+      emit(GetProductForUserAllErrorState());
+    });
+  }
   ProductForUserModel? productForUserModel;
-
-  void getProductForUser(context) {
+  int currentPageForUser=1;
+  void getProductForUser(BuildContext context,{bool isRefresh=false}) {
     emit(GetProductForUserLoadingState());
     DioHelper.postData(url: GET_PRODUCT_FOR_USER, data: {
       'Authorization': token,
+      'page':isRefresh?1:currentPageForUser
     }).then((value) {
-      productForUserModel = ProductForUserModel.fromJson(value.data);
-      print('${value.data}');
-      emit(GetProductForUserSuccessState(productForUserModel!));
+      if(isRefresh) {
+        print(isRefresh);
+       // currentPageForUser=1
+        productForUserModel = ProductForUserModel.fromJson(value.data);
+        emit(GetProductForUserSuccessState(productForUserModel!));
+      }
+      else{
+        productForUserModel!.productForUser.addAll(ProductForUserModel.fromJson(value.data).productForUser);
+        emit(GetProductForUserSuccessState(productForUserModel!));
+      }
+      currentPageForUser++;
     }).catchError((error) {
       print(error.toString());
       emit(GetProductForUserErrorState());
@@ -355,7 +386,7 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
         var response = await http.Response.fromStream(myRequest);
         if (myRequest.statusCode == 200) {
           emit(UpdateProductForUserSuccessState());
-          getProductForUser(context);
+          getProductForUser(context,isRefresh: true);
           print(response.body);
           print(jsonDecode(response.body));
           return jsonDecode(response.body);
@@ -417,7 +448,7 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
     if (await checkConnection()) {
       emit(InsertProductForUserLoadingState());
       var request = await http.MultipartRequest(
-          "POST", Uri.parse('https://ibrahim-store.com/api/add_pro.php'));
+          "POST", Uri.parse('https://ibrahim-store.com/api_old_09_10/add_pro.php'));
       var length = await path.length();
       var multiPartFile = http.MultipartFile(
           "image", http.ByteStream(path.openRead()), length,
@@ -434,6 +465,7 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
       var myRequest = await request.send();
       var response = await http.Response.fromStream(myRequest);
       if (myRequest.statusCode == 200) {
+        print(response.body);
         emit(InsertProductForUserSuccessState(productForUserModel!));
         return jsonDecode(response.body);
       } else {
@@ -545,6 +577,67 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
     emit(ChangeBottomForMerchant());
   }
 
+  HomeModel? homeModelWithoutToken;
+  int currentPage = 1;
+
+  void getHomeWithoutToken({bool isRefresh=false}) async {
+    emit(GetHomeWithoutTokenLoadingState());
+    if (await checkConnection()) {
+      if(isRefresh)
+        {
+          currentPage=1;
+        }
+      DioHelper.getData(url: homeWithoutToken, query: {
+        'page':currentPage
+      }).then(
+        (value) {
+          if(isRefresh) {
+            homeModel = HomeModel.fromJson(value.data);
+            emit(GetHomeWithoutTokenSuccessState());
+
+          }else{
+            homeModel!.products.addAll(HomeModel.fromJson(value.data).products);
+            emit(GetHomeWithoutTokenSuccessState());
+
+          }
+          currentPage++;
+        },
+      ).catchError(
+        (error) {
+          print(error.toString());
+          emit(GetHomeWithoutTokenErrorState());
+        },
+      );
+    }
+  }
+  List<Products> searchForUser=[];
+  void searchOnProductOfUser(String value)
+  {
+   searchForUser= productForUserAllModel!.productForUser.where((element) => element.name!.startsWith(value)).toList();
+   emit(SearchForUserState());
+  }
+  bool isSearching=false;
+Widget appBar(BuildContext context){
+  if(isSearching)
+    {
+      return IconButton(icon:Icon(Icons.clear), onPressed: () { _clearText(); Navigator.pop(context); },);
+    }else{
+    return IconButton(icon:Icon(Icons.search), onPressed: () { startSearch(context); },);
+  }
+}
+void startSearch(BuildContext context)
+{
+  ModalRoute.of(context)!.addLocalHistoryEntry(LocalHistoryEntry(onRemove: _clearText  ),);
+  isSearching=true;
+  emit(StartSearchingState());
+}
+TextEditingController textEditingController=TextEditingController();
+void _clearText()
+{
+  textEditingController.clear();
+  isSearching=false;
+  emit(ClearTextState());
+}
 }
 //36.2852408
 //33.5224673

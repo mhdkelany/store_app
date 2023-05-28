@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
 import 'package:store/models/home_model.dart';
@@ -175,31 +176,31 @@ var searchController=TextEditingController();
             ),
           ),
           SizedBox(
-            width: 10,
+            width: 5.w,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${model.name}',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontFamily: 'tajawal-light',
-                    color: Colors.black
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${model.name}',
+                  style: TextStyle(
+                      fontSize: 16.0.sp,
+                      fontFamily: 'tajawal-light',
+                      color: Colors.black
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                '${model.price} د.أ ',
-                style: Theme.of(context).textTheme.caption!.copyWith(
-                  color: primaryColor
-                )
-              ),
-            ],
-          ),
-          Spacer(
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  '${double.tryParse(model.price)!.toStringAsFixed(2)} د.أ ',
+                  style: Theme.of(context).textTheme.caption!.copyWith(
+                    color: primaryColor
+                  )
+                ),
+              ],
+            ),
           ),
           Icon(
             Icons.arrow_forward_ios,

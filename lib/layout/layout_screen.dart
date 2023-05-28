@@ -6,6 +6,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
+import 'package:store/modules/edit_profile_screen.dart';
 import 'package:store/modules/order/cubit/order_cubit.dart';
 import 'package:store/modules/order/screens/cart_screen.dart';
 import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
@@ -57,6 +58,10 @@ class LayoutScreen extends StatelessWidget {
                 onWillPop: () => onBack(context),
                 child: Scaffold(
                   appBar: AppBar(
+                    backgroundColor:
+                        StoreAppCubit.get(context).currentIndex == 4
+                            ? primaryColor
+                            : Colors.white,
                     leading: IconButton(
                       icon: Icon(Icons.menu_sharp),
                       onPressed: () {
@@ -64,6 +69,15 @@ class LayoutScreen extends StatelessWidget {
                       },
                     ),
                     actions: [
+                      if (StoreAppCubit.get(context).currentIndex == 4&&token!='')
+                        IconButton(
+                          onPressed: () {
+                            navigateTo(context, EditProfileScreen());
+                          },
+                          icon: Icon(
+                            Icons.edit,
+                          ),
+                        ),
                       IconButton(
                           onPressed: () {
                             navigateTo(

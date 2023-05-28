@@ -5,7 +5,7 @@ import 'package:store/shared/components/components.dart';
 
 import '../../network/local/cache_helper.dart';
 
-String? token='';
+String? token;
 String uId='';
 bool? location;
 
@@ -14,6 +14,7 @@ void logOut(context)
   CacheHelper.removeData(key: 'token').then((value) {
     if(value){
       navigateToEnd(context, ChoiceUser());
+      token='';
     }
   });
 bool check=false;
@@ -22,7 +23,7 @@ Future<bool> checkConnection()
 async{
   try
   {
-    final result=await InternetAddress.lookup('google.com');
+    final result=await InternetAddress.lookup('ibrahim-store.com');
     if(result.isNotEmpty&&result[0].rawAddress.isNotEmpty)
     {
       print('connect');

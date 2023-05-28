@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/components/constansts/constansts.dart';
+import 'package:store/shared/components/glowing_button/glowing_button.dart';
 
 import '../shared/style/color.dart';
 
@@ -50,20 +52,20 @@ class UploadWishScreen extends StatelessWidget {
                         Image(
                           image: AssetImage('assets/images/wishs.png'),
                           fit: BoxFit.cover,
-                          height: 100,
+                          height: 100.h,
                         ),
                         SizedBox(
-                          height: 30.0,
+                          height: 30.0.h,
                         ),
                         Text(
                           'يمكنك الان من ارسال المنتجات التي لم تجدها في التطبيق.',
                           style: Theme.of(context).textTheme.caption!.copyWith(
                               fontFamily: 'tajawal-light',
-                              fontSize: 16
+                              fontSize: 16.sp
                           ),
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: 20.0.h,
                         ),
                         defaultTextFromField(
                             hintText: 'محارم',
@@ -90,6 +92,7 @@ class UploadWishScreen extends StatelessWidget {
                         SizedBox(
                           height: 30,
                         ),
+                        if(token!=null)
                         defaultButton(
                           function:state is PostWishLoadingState?null: ()
                           {
@@ -104,7 +107,7 @@ class UploadWishScreen extends StatelessWidget {
                                 'جاري الإرسال...',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                 ),
                               ),
                               
@@ -114,10 +117,12 @@ class UploadWishScreen extends StatelessWidget {
                             'إرسال',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 16,
+                              fontSize: 16.sp,
                             ),
                           ),
-                        )
+                        ),
+                        if(token==null)
+                          GlowingButton(),
                       ],
                     ),
                   ),

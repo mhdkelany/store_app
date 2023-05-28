@@ -6,6 +6,7 @@ class CategoriesModel
   CategoriesModel.fromJson(dynamic json){
     status=json['state'];
     message=json['message'];
+    if(json['data']!=null)
     json['data'].forEach((element){
       data.add(Data.fromJson(element));
     });

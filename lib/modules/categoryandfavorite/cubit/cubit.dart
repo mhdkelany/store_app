@@ -34,7 +34,14 @@ class CategoriesAndFavoriteCubit extends Cubit<CategoriesAndFavoriteState>
     }
   }
   CategoryIncludeProduct? categoryIncludeProduct;
-  void getProductIncludeCategory(String id)async
+  Object tag=1;
+  void changeTag(Object value)
+  {
+    tag=value;
+    emit(ChangeTgaState());
+  }
+  int currentPage=1;
+  void getProductIncludeCategory(String id,{bool isRefresh=false})async
   {
     if(await checkConnection()) {
       try {
@@ -42,21 +49,24 @@ class CategoriesAndFavoriteCubit extends Cubit<CategoriesAndFavoriteState>
             url: PRODUCTCAT,
             token: token,
             data: {
-              'id_cate': id
+              'id_cate': id,
+              'page':isRefresh?1:currentPage
             }
         ).then((value) {
           if (value.statusCode == 200) {
-            categoryIncludeProduct =
-                CategoryIncludeProduct.fromJson(value.data);
-            categoryIncludeProduct!.products.forEach((element) {
-              // inTheCart.addAll({element.idProduct!:false});
-            });
-            emit(getProductIncludeCategorySuccessState());
+            if(isRefresh) {
+              currentPage=1;
+              categoryIncludeProduct =
+                  CategoryIncludeProduct.fromJson(value.data);
+              emit(getProductIncludeCategorySuccessState());
+            }else{
+              categoryIncludeProduct!.products.addAll(CategoryIncludeProduct.fromJson(value.data).products);
+              emit(getProductIncludeCategorySuccessState());
+            }
+            currentPage++;
           }
         }).catchError((error) {
           print(error.toString());
-          emit(getProductIncludeCategoryErrorState());
-        }).timeout(Duration(seconds: 60),onTimeout: (){
           emit(getProductIncludeCategoryErrorState());
         });
       }
@@ -65,6 +75,7 @@ class CategoriesAndFavoriteCubit extends Cubit<CategoriesAndFavoriteState>
       }
     }
   }
+  Map<dynamic,bool>isFavorite={};
   FavoritesModel? favoritesModel;
   void getFavorites()async
   {
@@ -77,8 +88,9 @@ class CategoriesAndFavoriteCubit extends Cubit<CategoriesAndFavoriteState>
           }
       ).then((value) {
         favoritesModel = FavoritesModel.fromJson(value.data);
-        //print(favoritesModel!.products[0].idProduct);
-        print(value.data);
+        favoritesModel!.products.forEach((element) {
+          isFavorite.addAll({element.idProduct:element.inFavorites});
+        });
         emit(GetFavoritesSuccessState());
       }).catchError((error) {
         emit(GetFavoritesErrorState());
@@ -101,7 +113,8 @@ class CategoriesAndFavoriteCubit extends Cubit<CategoriesAndFavoriteState>
         subCategoryModel=SubCategoryModel.fromJson(value.data);
         emit(GetSubOfCategorySuccessState());
         // ignore: argument_type_not_assignable_to_error_handler
-      }).catchError(() {
+      }).catchError((error) {
+        print(error.toString());
         emit(GetSubOfCategoryErrorState());
       });
     }

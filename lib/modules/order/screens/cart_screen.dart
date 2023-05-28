@@ -2,6 +2,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/modules/order/cubit/order_cubit.dart';
 import 'package:store/modules/order/widgets/build_Item_cart.dart';
@@ -9,6 +10,8 @@ import 'package:store/modules/order/widgets/build_action_for_cart.dart';
 import 'package:store/modules/order/widgets/build_button_order_now.dart';
 import 'package:store/modules/order/widgets/build_fallback_cart.dart';
 import 'package:store/modules/order/widgets/build_list_view_cart.dart';
+import 'package:store/shared/components/constansts/constansts.dart';
+import 'package:store/shared/components/glowing_button/glowing_button.dart';
 import 'package:store/shared/style/icon_broken.dart';
 
 class CartScreen extends StatelessWidget {
@@ -43,8 +46,13 @@ class CartScreen extends StatelessWidget {
                         condition: OrderCubit.get(context).product.length > 0,
                       ),
                     ),
-                    if (OrderCubit.get(context).product.length > 0)
+                    if (OrderCubit.get(context).product.length > 0&&token!=null)
                       BuildButtonOrderNow(),
+                    if(token==null&&OrderCubit.get(context).product.length > 0)
+                      GlowingButton(),
+                    SizedBox(
+                      height: 10.h,
+                    ),
                   ],
                 ));
           },

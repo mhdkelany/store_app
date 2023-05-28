@@ -72,6 +72,10 @@ dependencies:
   fluttertoast: ^8.2.1
   flutter_spinkit: ^5.1.0
   google_nav_bar: ^5.0.6
+  animated_custom_dropdown: ^1.5.0
+  pull_to_refresh: ^2.0.0
+  chips_choice_null_safety:
+  chewie_audio: ^1.5.0
 
 
   # The following adds the Cupertino Icons font to your application.

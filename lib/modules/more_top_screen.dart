@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
 import 'package:store/modules/order/screens/product_details_screen.dart';
@@ -78,62 +79,38 @@ class MoreTopScreen extends StatelessWidget {
                             SizedBox(
                               width: 5,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    child: Text(
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
                                       '${StoreAppCubit.get(context).homeModel!.top[index].name}',
                                       style: TextStyle(
                                           color: Colors.black,
-                                          fontFamily: 'tajawal-light'
+                                          fontFamily: 'tajawal-light',
+                                        fontSize: 14.sp
                                       ),
-                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    width: MediaQuery.of(context).size.width*0.25,
-                                  ),
-                                  Container(
-                                    child: Text(
+                                    Text(
                                       '${StoreAppCubit.get(context).homeModel!.top[index].shortDescription}',
                                       style: Theme.of(context).textTheme.caption,
                                       overflow: TextOverflow.ellipsis,
-                                    ),
-                                    width: MediaQuery.of(context).size.width*0.20,
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: StoreAppCubit.get(context).isFavorite[StoreAppCubit.get(context).homeModel!.top[index].idProduct]!?Colors.red[50]:Colors.grey[300]
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Icon(
-                                    Icons.favorite,
-                                    size: 18,
-                                    color: StoreAppCubit.get(context).isFavorite[StoreAppCubit.get(context).homeModel!.top[index].idProduct]!?Colors.red:Colors.grey,
-                                  ),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
-                            Spacer(),
+                            
                             Padding(
                               padding: const EdgeInsets.only(top: 15),
                               child: Text(
-                                '${StoreAppCubit.get(context).homeModel!.top[index].price}د.أ',
+                                '${double.tryParse(StoreAppCubit.get(context).homeModel!.top[index].price)!.toStringAsFixed(2)}د.أ',
                                 style: TextStyle(
                                     fontFamily: 'tajawal-bold',
                                     color: primaryColor,
-                                    fontSize: 18
+                                    fontSize: 18.sp
                                 ),
                               ),
                             )

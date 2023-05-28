@@ -7,6 +7,7 @@ class SubCategoryModel
   {
     message=json['message'];
     status=json['state'];
+    if(json['data']!=null)
     json['data'].forEach((element){
       dataOfSubCategory.add(DataOfSubCategory.fromJson(element));
     });

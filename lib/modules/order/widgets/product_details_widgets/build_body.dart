@@ -5,6 +5,7 @@ import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/models/home_model.dart';
 import 'package:store/modules/order/cubit/order_cubit.dart';
 import 'package:store/shared/components/components.dart';
+import 'package:store/shared/components/constansts/constansts.dart';
 import 'package:store/shared/style/color.dart';
 
 // ignore: must_be_immutable
@@ -41,34 +42,35 @@ class BuildBody extends StatelessWidget {
               SizedBox(
                 width: 15,
               ),
-              InkWell(
-                onTap: () {
-                  StoreAppCubit.get(context).changeFavorites(model.idProduct!);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: StoreAppCubit.get(context)
-                              .isFavorite[model.idProduct]!
-                          ? Colors.red[50]
-                          : Colors.grey[300]),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Icon(
-                      Icons.favorite,
-                      size: 18,
-                      color: StoreAppCubit.get(context)
-                              .isFavorite[model.idProduct]!
-                          ? Colors.red
-                          : Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-              // Spacer(),
-              SizedBox(
-                width: 20.w,
-              ),
+              // if(token!=null)
+              // InkWell(
+              //   onTap: () {
+              //     StoreAppCubit.get(context).changeFavorites(model.idProduct!);
+              //   },
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(15),
+              //         color: StoreAppCubit.get(context)
+              //                 .isFavorite[model.idProduct]!
+              //             ? Colors.red[50]
+              //             : Colors.grey[300]),
+              //     child: Padding(
+              //       padding: const EdgeInsets.all(10.0),
+              //       child: Icon(
+              //         Icons.favorite,
+              //         size: 18,
+              //         color: StoreAppCubit.get(context)
+              //                 .isFavorite[model.idProduct]!
+              //             ? Colors.red
+              //             : Colors.grey,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // // Spacer(),
+              // SizedBox(
+              //   width: 20.w,
+              // ),
               Container(
                 width: MediaQuery.of(context).size.width * 0.23,
                 child: Text(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
 
 import 'build_categories.dart';

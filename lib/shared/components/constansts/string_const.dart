@@ -16,3 +16,7 @@ const url='https://ibrahim-store.com/api/';
 const imageUrl='https://ibrahim-store.com/api/images/';
 const rePasswordSuccessTitle='تغيير كلمة المرور';
 const rePasswordSuccessContain='تمت تغيير كلمة المرور بنجاح';
+const loginNow='سجل دخولك الآن';
+const noInformation='لا يوجد معلومات';
+const withoutName='بدون اسم';
+List<String> items=['العاصمة',"اربد","البلقاء","الكرك","معان","الزرقاء","المفرق","الطفيلة","مادبة","جرش","عجلون","العقبة"];

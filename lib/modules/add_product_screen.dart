@@ -4,12 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:store/layout/cubit/states.dart';
 import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
+import 'package:store/modules/categoryandfavorite/cubit/states.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/style/color.dart';
 
 import '../layout/cubit/cubit.dart';
 import '../shared/components/constansts/constansts.dart';
-
+var productNameController = TextEditingController();
+var descriptionController = TextEditingController();
+var priceController = TextEditingController();
+var quantityController = TextEditingController();
+var shortDescriptionController = TextEditingController();
 class AddProductScreen extends StatelessWidget {
   int? hexColor;
   List colors = [];
@@ -19,11 +24,7 @@ class AddProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var productNameController = TextEditingController();
-    var descriptionController = TextEditingController();
-    var priceController = TextEditingController();
-    var quantityController = TextEditingController();
-    var shortDescriptionController = TextEditingController();
+
     String? idCategory;
     String? idSupOfCategory;
     return Directionality(
@@ -110,81 +111,94 @@ class AddProductScreen extends StatelessWidget {
                     SizedBox(
                       height: 15.0,
                     ),
-                    DropdownButtonFormField<dynamic>(
-                      items: CategoriesAndFavoriteCubit.get(context)
-                                  .categoriesModel !=
-                              null
-                          ? CategoriesAndFavoriteCubit.get(context)
-                              .categoriesModel!
-                              .data
-                              .map((e) => DropdownMenuItem(
-                                    child: Text('${e.name}'),
-                                    value: e.idCate,
-                                  ))
-                              .toList()
-                          : []
-                              .map((e) => DropdownMenuItem(
-                                    child: Text('$e'),
-                                    value: e,
-                                  ))
-                              .toList(),
-                      onChanged: (value) {
-                        StoreAppCubit.get(context).choiceFromCategory(value);
-                        idCategory = value;
-                        CategoriesAndFavoriteCubit.get(context).getSubOfCategory(id: idCategory!);
+                    BlocBuilder<CategoriesAndFavoriteCubit,
+                        CategoriesAndFavoriteState>(
+                      builder: (context, state) {
+                        return DropdownButtonFormField<dynamic>(
+                          items: CategoriesAndFavoriteCubit.get(context)
+                                      .categoriesModel !=
+                                  null
+                              ? CategoriesAndFavoriteCubit.get(context)
+                                  .categoriesModel!
+                                  .data
+                                  .map((e) => DropdownMenuItem(
+                                        child: Text('${e.name}'),
+                                        value: e.idCate,
+                                      ))
+                                  .toList()
+                              : []
+                                  .map((e) => DropdownMenuItem(
+                                        child: Text('$e'),
+                                        value: e,
+                                      ))
+                                  .toList(),
+                          onChanged: (value) {
+                            StoreAppCubit.get(context)
+                                .choiceFromCategory(value);
+                            idCategory = value;
+                            CategoriesAndFavoriteCubit.get(context)
+                                .getSubOfCategory(id: idCategory!);
+                          },
+                          value: StoreAppCubit.get(context).category,
+                          borderRadius: BorderRadius.circular(20.0),
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 15)),
+                          hint: Text(CategoriesAndFavoriteCubit.get(context)
+                                      .categoriesModel !=
+                                  null
+                              ? 'اختر القسم'
+                              : 'يوجد خطأ'),
+                        );
                       },
-                      value: StoreAppCubit.get(context).category,
-                      borderRadius: BorderRadius.circular(20.0),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 15)),
-                      hint: Text(CategoriesAndFavoriteCubit.get(context)
-                                  .categoriesModel !=
-                              null
-                          ? 'اختر القسم'
-                          : 'يوجد خطأ'),
                     ),
                     SizedBox(
                       height: 15.0,
                     ),
-                    DropdownButtonFormField<dynamic>(
-                      items: CategoriesAndFavoriteCubit.get(context)
-                                  .subCategoryModel !=
-                              null
-                          ? CategoriesAndFavoriteCubit.get(context)
-                              .subCategoryModel!
-                              .dataOfSubCategory
-                              .map((e) => DropdownMenuItem(
-                                    child: Text('${e.name}'),
-                                    value: e.id,
-                                  ))
-                              .toList()
-                          : []
-                              .map((e) => DropdownMenuItem(
-                                    child: Text('$e'),
-                                    value: e,
-                                  ))
-                              .toList(),
-                      onChanged: (value) {
-                        StoreAppCubit.get(context).choiceFromSubCategory(value);
-                        idSupOfCategory = value;
+                    BlocBuilder<CategoriesAndFavoriteCubit,
+                        CategoriesAndFavoriteState>(
+                      builder: (context, state) {
+                        return DropdownButtonFormField<dynamic>(
+                          items: CategoriesAndFavoriteCubit.get(context)
+                                      .subCategoryModel !=
+                                  null
+                              ? CategoriesAndFavoriteCubit.get(context)
+                                  .subCategoryModel!
+                                  .dataOfSubCategory
+                                  .map((e) => DropdownMenuItem(
+                                        child: Text('${e.name}'),
+                                        value: e.id,
+                                      ))
+                                  .toList()
+                              : []
+                                  .map((e) => DropdownMenuItem(
+                                        child: Text('$e'),
+                                        value: e,
+                                      ))
+                                  .toList(),
+                          onChanged: (value) {
+                            StoreAppCubit.get(context)
+                                .choiceFromSubCategory(value);
+                            idSupOfCategory = value;
+                          },
+                          value: StoreAppCubit.get(context).subCategory,
+                          borderRadius: BorderRadius.circular(20.0),
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 15)),
+                          hint: Text(CategoriesAndFavoriteCubit.get(context)
+                                      .categoriesModel !=
+                                  null
+                              ? 'اختر الفئة'
+                              : 'يوجد خطأ'),
+                        );
                       },
-                      value: StoreAppCubit.get(context).subCategory,
-                      borderRadius: BorderRadius.circular(20.0),
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 15)),
-                      hint: Text(CategoriesAndFavoriteCubit.get(context)
-                                  .categoriesModel !=
-                              null
-                          ? 'اختر الفئة'
-                          : 'يوجد خطأ'),
                     ),
                     SizedBox(
                       height: 15,
@@ -367,7 +381,7 @@ class AddProductScreen extends StatelessWidget {
                               buildSnackBar(Text('تمت اضافة المنتج'),
                                   Colors.greenAccent, Duration(seconds: 3)));
                           StoreAppCubit.get(context).removeImage();
-                          StoreAppCubit.get(context).getProductForUser(context);
+                          StoreAppCubit.get(context).getProductForUser(context,isRefresh: true);
                           //navigateToEnd(context, MainMerchantScreen());
                         } else if (state is InsertProductForUserErrorState) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -390,7 +404,9 @@ class AddProductScreen extends StatelessWidget {
                                             null) {
                                           if (idCategory != null) {
                                             //  String convertBase64=base64Encode(StoreAppCubit.get(context).productImage!.readAsBytesSync());
-
+                                            print(StoreAppCubit.get(
+                                                context)
+                                                .productImage!);
                                             StoreAppCubit.get(context)
                                                 .insertProduct(
                                                     data: {
@@ -406,7 +422,7 @@ class AddProductScreen extends StatelessWidget {
                                                   'quantity':
                                                       quantityController.text,
                                                   'token': token,
-                                                  'idCategory': idCategory
+                                                  'idCategory': idSupOfCategory
                                                 },
                                                     path: StoreAppCubit.get(
                                                             context)

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
 import 'package:store/models/menu_item.dart';
@@ -8,6 +9,7 @@ import 'package:store/modules/call_me_screen.dart';
 import 'package:store/modules/order/screens/orders_screen.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/components/constansts/constansts.dart';
+import 'package:store/shared/components/constansts/string_const.dart';
 import 'package:store/shared/style/color.dart';
 
 class MenuItems
@@ -66,7 +68,7 @@ class MenuScreen extends StatelessWidget {
                               SizedBox(width: 10,),
                               if(StoreAppCubit.get(context).userInformation!=null)
                               Text('${StoreAppCubit.get(context).userInformation!.address}',style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   fontFamily: 'tajawal-light'
                               ),),
                             ],
@@ -76,6 +78,7 @@ class MenuScreen extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
+                      if(token!=null)
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
@@ -99,6 +102,29 @@ class MenuScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      if(token==null)
+                        GestureDetector(
+                          onTap: (){},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                loginNow,
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontFamily: 'tajawal-light',
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5.w,
+                              ),
+                              Icon(
+                                Icons.arrow_circle_left_outlined,
+                                color: Colors.white,
+                              )
+                            ],
+                          ),
+                        ),
                       SizedBox(
                         height: 10,
                       ),
@@ -160,11 +186,11 @@ class MenuScreen extends StatelessWidget {
 
   }
   Widget buildMenuItem(MenuItemDrawer itemDrawer)=>ListTile(
-    minLeadingWidth: 20 ,
+    minLeadingWidth: 20.w ,
 
     title: Icon(itemDrawer.icon,color: Colors.white,size: 22,),
     leading: Text('${itemDrawer.title}',style: TextStyle(
-      fontSize: 14,
+      fontSize: 14.sp,
       fontFamily: 'tajawal-light'
     ),),
     onTap: (){},
