@@ -14,7 +14,7 @@ void logOut(context)
   CacheHelper.removeData(key: 'token').then((value) {
     if(value){
       navigateToEnd(context, ChoiceUser());
-      token='';
+      token=null;
     }
   });
 bool check=false;

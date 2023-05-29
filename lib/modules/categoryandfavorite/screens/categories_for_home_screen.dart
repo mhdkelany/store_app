@@ -27,8 +27,10 @@ class CategoriesForHomeScreen extends StatelessWidget {
       child:
           BlocBuilder<CategoriesAndFavoriteCubit, CategoriesAndFavoriteState>(
         builder: (context, state) {
-          if (CategoriesAndFavoriteCubit.get(context).categoryIncludeProduct !=
-              null)
+          if (CategoriesAndFavoriteCubit.get(context).subCategoryModel !=
+                  null &&
+              CategoriesAndFavoriteCubit.get(context).categoryIncludeProduct !=
+                  null)
             return Scaffold(
               appBar: AppBar(
                 titleSpacing: 0,
@@ -43,57 +45,91 @@ class CategoriesForHomeScreen extends StatelessWidget {
                     text: '$title',
                     textStyle: TextStyle(color: Colors.white, fontSize: 16.sp)),
               ),
-              body: SmartRefresher(
-                enablePullDown: false,
-                enablePullUp: true,
-                controller: refreshController,
-                onLoading: () {
-                  CategoriesAndFavoriteCubit.get(context)
-                      .getProductIncludeCategory(idCate);
-                  if (state is getProductIncludeCategorySuccessState) {
-                    refreshController.loadComplete();
-                  } else {
-                    refreshController.loadFailed();
-                  }
-                },
-                child: Column(
-                  children: [
-                    ChipsChoice.single(
-                      value: CategoriesAndFavoriteCubit.get(context).tag,
-                      onChanged: (value) {
-                        CategoriesAndFavoriteCubit.get(context)
-                            .changeTag(value!);
-                      },
-                      choiceItems: C2Choice.listFrom(
-                          source: CategoriesAndFavoriteCubit.get(context)
-                              .subCategoryModel!
-                              .dataOfSubCategory,
-                          value: (i, v) => i,
-                          label: (i,dynamic v) => v),
-                      choiceActiveStyle: C2ChoiceStyle(
-                          color: Color(0xff36a8f4),
-                          borderColor: Color(0xff36a8f4),
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      choiceStyle: C2ChoiceStyle(
+              body: Column(
+                children: [
+                  ChipsChoice.single(
+                    value: CategoriesAndFavoriteCubit.get(context).tag,
+                    onChanged: (value) {
+                      CategoriesAndFavoriteCubit.get(context).changeTag(value!);
+                      CategoriesAndFavoriteCubit.get(context)
+                          .getProductIncludeCategory(
+                              CategoriesAndFavoriteCubit.get(context)
+                                  .subCategoryModel!
+                                  .dataOfSubCategory[
+                                      CategoriesAndFavoriteCubit.get(context)
+                                          .tag]
+                                  .id,
+                              isRefresh: true);
+                    },
+                    choiceItems: C2Choice.listFrom(
+                        source: CategoriesAndFavoriteCubit.get(context)
+                            .subCategoryModel!
+                            .dataOfSubCategory
+                            .map((e) => e.name)
+                            .toList(),
+                        value: (i, v) => i,
+                        label: (i, dynamic v) => v),
+                    choiceActiveStyle: C2ChoiceStyle(
+                        color: Color(0xff36a8f4),
+                        borderColor: Color(0xff36a8f4),
+                        labelStyle: TextStyle(
+                            fontSize: 12.sp, fontFamily: 'tajawal-ligh'),
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                    choiceStyle: C2ChoiceStyle(
                         color: Color(0xff1c1c1c),
                         borderRadius: BorderRadius.all(
                           Radius.circular(5),
                         ),
-                      ),
+                        labelStyle: TextStyle(
+                            fontSize: 12.sp, fontFamily: 'tajawal-ligh')),
+                  ),
+                  Expanded(
+                    child: SmartRefresher(
+                      enablePullDown: false,
+                      enablePullUp: true,
+                      controller: refreshController,
+                      onLoading: () {
+                        CategoriesAndFavoriteCubit.get(context)
+                            .getProductIncludeCategory(
+                                CategoriesAndFavoriteCubit.get(context)
+                                    .subCategoryModel!
+                                    .dataOfSubCategory[
+                                        CategoriesAndFavoriteCubit.get(context)
+                                            .tag]
+                                    .id);
+                        if (state is getProductIncludeCategorySuccessState) {
+                          refreshController.loadComplete();
+                        } else {
+                          refreshController.loadFailed();
+                        }
+                      },
+                      child: ListView.separated(
+                          itemBuilder: (context, index) => BuildListOfProducts(
+                              index: index, context: context),
+                          separatorBuilder: (context, index) => Container(
+                                height: 1,
+                                width: double.infinity,
+                                color: Colors.grey[300],
+                              ),
+                          itemCount: CategoriesAndFavoriteCubit.get(context)
+                              .categoryIncludeProduct!
+                              .products
+                              .length),
                     ),
-                    ListView.separated(
-                        itemBuilder: (context, index) =>
-                            BuildListOfProducts(index: index, context: context),
-                        separatorBuilder: (context, index) => Container(
-                              height: 1,
-                              width: double.infinity,
-                              color: Colors.grey[300],
-                            ),
-                        itemCount: CategoriesAndFavoriteCubit.get(context)
-                            .categoryIncludeProduct!
-                            .products
-                            .length),
-                  ],
+                  ),
+                ],
+              ),
+            );
+          else if(!CategoriesAndFavoriteCubit.get(context).subCategoryModel!.status)
+            return Scaffold(
+              body: Center(
+                child: Text(
+                  'No Data Found',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'tajawal-ligh',
+                    fontSize: 26.sp,
+                  ),
                 ),
               ),
             );

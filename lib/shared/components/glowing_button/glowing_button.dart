@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:store/modules/auth/login/login_screen.dart';
+import 'package:store/shared/components/components.dart';
 
 import '../constansts/string_const.dart';
 
@@ -23,6 +25,7 @@ class _GlowingButtonState extends State<GlowingButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTapUp: (value) {
+        navigateTo(context, LoginScreen(isMarket: false));
         setState(() {});
         glowing = false;
       },

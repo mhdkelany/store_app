@@ -57,7 +57,7 @@ class MainScreen extends StatelessWidget {
       }
    else if(StoreAppCubit.get(context).selectedIndex==1)
     {
-      return AddProductScreen();
+      return AddProductScreen(isFromDrawer: true,);
     }
    else if(StoreAppCubit.get(context).selectedIndex==2)
     {

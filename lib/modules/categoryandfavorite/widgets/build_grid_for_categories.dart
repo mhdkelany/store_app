@@ -4,8 +4,9 @@ import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
 import 'build_categories.dart';
 
 class BuildGridForCategories extends StatelessWidget {
-   BuildGridForCategories({required this.context,Key? key}) : super(key: key);
+   BuildGridForCategories({required this.context,required this.isMerchant,Key? key}) : super(key: key);
   BuildContext context;
+  bool isMerchant;
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -14,7 +15,7 @@ class BuildGridForCategories extends StatelessWidget {
       crossAxisSpacing: 2,
       childAspectRatio: MediaQuery.of(context).size.width/MediaQuery.of(context).size.height/0.48,
       children: List.generate(
-          CategoriesAndFavoriteCubit.get(context).categoriesModel!.data.length, (index) => BuildCategories(context:context,index:index,data:CategoriesAndFavoriteCubit.get(context).categoriesModel!.data[index])
+          CategoriesAndFavoriteCubit.get(context).categoriesModel!.data.length, (index) => BuildCategories(context:context,index:index,data:CategoriesAndFavoriteCubit.get(context).categoriesModel!.data[index],isMerchant: isMerchant,)
       ),
     );
   }

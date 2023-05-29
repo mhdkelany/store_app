@@ -1,3 +1,5 @@
+import 'package:store/modules/manage_product/model/sub_category_model.dart';
+
 abstract class CategoriesAndFavoriteState {}
 class CategoriesAndFavoriteInitState extends CategoriesAndFavoriteState{}
 
@@ -12,6 +14,9 @@ class GetFavoritesSuccessState extends CategoriesAndFavoriteState{}
 class GetFavoritesLoadingState extends CategoriesAndFavoriteState{}
 class GetFavoritesErrorState extends CategoriesAndFavoriteState{}
 
-class GetSubOfCategorySuccessState extends CategoriesAndFavoriteState{}
+class GetSubOfCategorySuccessState extends CategoriesAndFavoriteState{
+  SubCategoryModel subCategoryModel;
+  GetSubOfCategorySuccessState(this.subCategoryModel);
+}
 class GetSubOfCategoryLoadingState extends CategoriesAndFavoriteState{}
 class GetSubOfCategoryErrorState extends CategoriesAndFavoriteState{}

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
 import 'package:store/modules/categoryandfavorite/models/categories_model.dart';
 import 'package:store/modules/categoryandfavorite/screens/categories_for_home_screen.dart';
@@ -12,19 +13,29 @@ class BuildCategories extends StatelessWidget {
       {required this.context,
       required this.index,
       required this.data,
+         this.isMerchant=false,
       Key? key})
       : super(key: key);
   BuildContext context;
   int index;
   Data data;
+  bool isMerchant;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-      //  CategoriesAndFavoriteCubit.get(context).categoryIncludeProduct=null;
-        CategoriesAndFavoriteCubit.get(context).getProductIncludeCategory(data.idCate,isRefresh: true);
-        navigateTo(context, ProductOfCategoryMerchant(idCate: data.idCate,));
+        if(isMerchant) {
+          CategoriesAndFavoriteCubit.get(context).getProductIncludeCategory(
+              data.idCate, isRefresh: true);
+          navigateTo(context, ProductOfCategoryMerchant(idCate: data.idCate,));
+        }else{
+          CategoriesAndFavoriteCubit.get(context).categoryIncludeProduct=null;
+          CategoriesAndFavoriteCubit.get(context).getSubOfCategory(id: data.idCate);
+          navigateTo(context, CategoriesForHomeScreen(title: '${data.name}',idCate: data.idCate,));
+          StoreAppCubit.get(context).selectIndex(index);
+
+        }
       },
       child: Card(
         shape: RoundedRectangleBorder(

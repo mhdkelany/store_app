@@ -13,8 +13,9 @@ import 'package:store/shared/style/color.dart';
 class CategoriesScreen extends StatelessWidget {
 
   bool isHome = true;
+  bool isMerchant;
 
-  CategoriesScreen({required this.isHome,Key? key}):super(key: key);
+  CategoriesScreen({required this.isHome,required this.isMerchant,Key? key}):super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +36,10 @@ class CategoriesScreen extends StatelessWidget {
                 appBar: isHome ? null : AppBar(),
                 body: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: BuildGridForCategories(context: context,),
+                  child: BuildGridForCategories(context: context,isMerchant: isMerchant),
                 ),),
             fallback: (context) => Center(child: SpinKitFadingCircle(color: primaryColor,)),
-            condition: CategoriesAndFavoriteCubit.get(context).categoriesModel != null &&
-                CategoriesAndFavoriteCubit.get(context).categoryIncludeProduct != null,
+            condition: CategoriesAndFavoriteCubit.get(context).categoriesModel != null
           ),
         );
       },

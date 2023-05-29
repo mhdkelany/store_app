@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
+import 'package:store/modules/add_product_screen.dart';
 import 'package:store/modules/categoryandfavorite/screens/categories_screen.dart';
 import 'package:store/modules/categoryandfavorite/widgets/build_grid_for_categories.dart';
 import 'package:store/modules/update_product_screen.dart';
@@ -143,7 +144,9 @@ class MainMerchantScreen extends StatelessWidget {
                       color: Colors.white,
                       size: 30,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      navigateTo(context, AddProductScreen(isFromDrawer: false,));
+                    },
                   ),
                   floatingActionButtonLocation:
                       FloatingActionButtonLocation.centerDocked,
@@ -421,7 +424,7 @@ class MainMerchantScreen extends StatelessWidget {
                           1)
                         Expanded(
                             child: BuildGridForCategories(
-                          context: context,
+                          context: context,isMerchant: true,
                         )),
                     ],
                   ),

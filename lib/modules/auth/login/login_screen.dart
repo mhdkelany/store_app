@@ -360,13 +360,18 @@ class LoginScreen extends StatelessWidget {
                                           ],
                                         ),
                                         if(!isMarket)
-                                        TextButton(
-                                          onPressed: () {
-                                            navigateTo(context, DrawerScreen());
-                                            CategoriesAndFavoriteCubit.get(context).getCategories();
-                                            StoreAppCubit.get(context).getHomeWithoutToken(isRefresh: true);
-                                          },
-                                          child: Text('تخطي'),
+                                        Row(
+                                          children: [
+                                            Spacer(),
+                                            TextButton(
+                                              onPressed: () {
+                                                navigateTo(context, DrawerScreen());
+                                                CategoriesAndFavoriteCubit.get(context).getCategories();
+                                                StoreAppCubit.get(context).getHomeWithoutToken(isRefresh: true);
+                                              },
+                                              child: Text('تخطي'),
+                                            ),
+                                          ],
                                         )
                                       ],
                                     ),

@@ -24,7 +24,6 @@ class CategoriesAndFavoriteCubit extends Cubit<CategoriesAndFavoriteState>
         token: token,
       ).then((value) {
         categoriesModel=CategoriesModel.fromJson(value.data);
-        print(value.data);
         emit(StoreCategoriesSuccessState());
       }).catchError((error){
         emit(StoreCategoriesErrorState());
@@ -34,7 +33,7 @@ class CategoriesAndFavoriteCubit extends Cubit<CategoriesAndFavoriteState>
     }
   }
   CategoryIncludeProduct? categoryIncludeProduct;
-  Object tag=1;
+  dynamic tag=0;
   void changeTag(Object value)
   {
     tag=value;
@@ -111,9 +110,11 @@ class CategoriesAndFavoriteCubit extends Cubit<CategoriesAndFavoriteState>
         },
       ).then((value) {
         subCategoryModel=SubCategoryModel.fromJson(value.data);
-        emit(GetSubOfCategorySuccessState());
+        if(subCategoryModel!.dataOfSubCategory.isNotEmpty)
+       getProductIncludeCategory(subCategoryModel!.dataOfSubCategory[0].id,isRefresh: true);
+        emit(GetSubOfCategorySuccessState(subCategoryModel!));
         // ignore: argument_type_not_assignable_to_error_handler
-      }).catchError((error) {
+      }).catchError((error){
         print(error.toString());
         emit(GetSubOfCategoryErrorState());
       });

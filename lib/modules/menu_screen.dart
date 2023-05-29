@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
 import 'package:store/models/menu_item.dart';
+import 'package:store/modules/auth/login/login_screen.dart';
 import 'package:store/modules/call_me_screen.dart';
 import 'package:store/modules/order/screens/orders_screen.dart';
 import 'package:store/shared/components/components.dart';
@@ -104,7 +105,9 @@ class MenuScreen extends StatelessWidget {
                       ),
                       if(token==null)
                         GestureDetector(
-                          onTap: (){},
+                          onTap: (){
+                            navigateTo(context, LoginScreen(isMarket: false));
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

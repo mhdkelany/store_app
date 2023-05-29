@@ -17,7 +17,8 @@ class BuildCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        CategoriesAndFavoriteCubit.get(context).getProductIncludeCategory(model.idCate,isRefresh: true);
+        CategoriesAndFavoriteCubit.get(context).categoryIncludeProduct=null;
+        CategoriesAndFavoriteCubit.get(context).getSubOfCategory(id: model.idCate);
         navigateTo(context, CategoriesForHomeScreen(title: '${model.name}',idCate: model.idCate,));
         StoreAppCubit.get(context).selectIndex(index);
         print(model.idCate);

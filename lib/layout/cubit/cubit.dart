@@ -56,7 +56,7 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
   HomeModel? homeModel;
   List<Widget> screens = [
     HomeScreen(),
-    CategoriesScreen(isHome: true),
+    CategoriesScreen(isHome: true,isMerchant: false),
     UploadWishScreen(),
     FavoritesScreen(),
     ProfileScreen(),
