@@ -67,7 +67,7 @@ class RePasswordCubit extends Cubit<RePasswordStates> {
       emit(RePasswordVerifiedPhoneNumberLoadingState());
       try {
         await FirebaseAuth.instance.verifyPhoneNumber(
-          phoneNumber: '+963${phone}',
+          phoneNumber: '+962${phone}',
           verificationCompleted: (PhoneAuthCredential credential) {},
           verificationFailed: (FirebaseAuthException e) {
             rePasswordIsLoading = false;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:store/modules/other/other_screens/choice_user.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/components/constansts/string_const.dart';
 
@@ -12,6 +13,7 @@ class VerifiedSuccessScreen extends StatelessWidget {
       child: Scaffold(
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
                 height: 20.h,
@@ -29,7 +31,7 @@ class VerifiedSuccessScreen extends StatelessWidget {
               ),
               Icon(
                 Icons.check_circle_outline_outlined,
-                size: 40,
+                size: 200.sp,
                 color: Colors.deepOrange,
               ),
               SizedBox(
@@ -43,6 +45,21 @@ class VerifiedSuccessScreen extends StatelessWidget {
                   fontFamily: 'tajawal-light',
                 ),
               ),
+              //Spacer(),
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
+                child: defaultButton(
+                  function: () {
+                    navigateToEnd(context, ChoiceUser());
+                  },
+                  widget: buildText(
+                    text: 'العودة الى اختيار المستخدم',
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),

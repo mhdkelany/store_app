@@ -14,7 +14,47 @@
       },
       "oauth_client": [
         {
-          "client_id": "180470430743-1iui4jt0o8oongscja1aj3pvbk60j4gt.apps.googleusercontent.com",
+          "client_id": "180470430743-4knjli857n7m8oppcinf6lhulepfv8u1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.storeapp.store",
+            "certificate_hash": "e4fc932001c3c7ced755486fda734a7cceadccd8"
+          }
+        },
+        {
+          "client_id": "180470430743-hsucthpnovbuv4b7duebvoo16f44l37k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.storeapp.store",
+            "certificate_hash": "61ac7f695444a8ac43b2248bfb7f517e9e740dae"
+          }
+        },
+        {
+          "client_id": "180470430743-o6blj1uthkbirre6r0u03vj62f0uijh7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.storeapp.store",
+            "certificate_hash": "8550c96ac4b3db40b10e693c6055a91044baf2eb"
+          }
+        },
+        {
+          "client_id": "180470430743-rr8t0cntha5cmn2aumjbaepabhaa2p8u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.storeapp.store",
+            "certificate_hash": "07298846b9447658fe0375b02cee74b8757981c7"
+          }
+        },
+        {
+          "client_id": "180470430743-vkcbdbj0p9g3vncg8k4s8l4ida7jlrea.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.storeapp.store",
+            "certificate_hash": "8a55c1a601848d853995f796c89cda5b9d4d8b8e"
+          }
+        },
+        {
+          "client_id": "180470430743-kb2m7rsrplfa7e802f55jjljpkp2885e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -29,6 +69,13 @@
             {
               "client_id": "180470430743-1iui4jt0o8oongscja1aj3pvbk60j4gt.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "180470430743-2i958jtvhlbmtkug4oi783g38j11r6hf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.storeapp.store"
+              }
             }
           ]
         }

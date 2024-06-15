@@ -37,6 +37,7 @@ Widget defaultTextFromField(
         Color? hoverColor,
         Color? prefixIconColor,
         Widget? prefixWidget,
+          bool isSearch=false,
         int maxLine = 1}) =>
     TextFormField(
       maxLines: maxLine,
@@ -45,6 +46,12 @@ Widget defaultTextFromField(
       controller: controller,
       decoration: InputDecoration(
           focusedBorder: border2,
+          enabledBorder:isSearch?InputBorder.none: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(
+              20,
+            ),
+            borderSide: BorderSide(color: Colors.grey)
+          ),
           focusColor: focusColor,
           fillColor: fillColor,
           hoverColor: hoverColor,
@@ -54,6 +61,8 @@ Widget defaultTextFromField(
           floatingLabelBehavior: floatingLabelBehavior,
           contentPadding: EdgeInsets.symmetric(vertical: 15),
           border: border,
+          labelStyle: TextStyle(
+              fontFamily: 'tahawal-light', fontWeight: FontWeight.w500),
           labelText: text,
           prefix: prefixWidget,
           prefixIconColor: prefixIconColor,
@@ -115,20 +124,23 @@ SnackBar buildSnackBar(Widget content, Color color, Duration duration,
 
 buildDialog(context, StoreAppStates state) => showDialog(
     context: context,
-    builder: (context) => AlertDialog(
-          title: Text('No Internet Connection'),
-          content: Text('Turn on the WiFi or Mobil Data'),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  if (state is ConnectionErrorState) {
-                    buildDialog(context, state);
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text('Ok'))
-          ],
-        ));
+    builder: (context) => Directionality(
+      textDirection: TextDirection.rtl,
+      child: AlertDialog(
+            title: Text('لا يوجد اتصال بالانترنت'),
+            content: Text('تأكد انك متصل بالانترنت ثم اعد المحاولة'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    if (state is ConnectionErrorState) {
+                      buildDialog(context, state);
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Text('نعم'))
+            ],
+          ),
+    ));
 
 Widget buildText({
   required String text,
@@ -266,4 +278,3 @@ Widget Loading(BuildContext context) => AnimatedContainer(
         ),
       ),
     );
-

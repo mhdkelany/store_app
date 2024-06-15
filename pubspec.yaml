@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.3+3
+version: 1.0.6+13
 
 environment:
   sdk: ">=2.17.0-69.2.beta <3.0.0"
@@ -31,55 +31,56 @@ dependencies:
 
   flutter:
     sdk: flutter
-  hexcolor: ^2.0.4
+  hexcolor: ^3.0.1
   animated_splash_screen: ^1.2.0
   smooth_page_indicator: ^1.0.0+2
   conditional_builder_null_safety: ^0.0.6
   shared_preferences: ^2.0.13
   bloc: ^8.0.2
   flutter_bloc: ^8.0.1
-  dio: ^4.0.4
-  geolocator: ^9.0.2
+  dio: ^5.3.4
+  geolocator: ^10.1.0
   geocoding: ^2.0.4
   google_maps_flutter: ^2.1.7
   carousel_slider: ^4.0.0
-  flutter_offline: ^2.1.0
+  flutter_offline: ^2.0.0
   expandable_text: ^2.3.0
-  shimmer: ^2.0.0
-  cached_network_image: ^3.2.1
+  shimmer: ^3.0.0
+  cached_network_image: ^3.3.0
   flutter_cache_manager: ^3.3.0
   flutter_zoom_drawer: ^3.0.2
   http_parser: ^4.0.1
   json_annotation: ^4.6.0
   image_picker:
   flutter_colorpicker: ^1.0.3
-  firebase_core: ^2.4.0
-  firebase_auth: ^4.2.1
+  firebase_core: ^2.24.0
+  firebase_auth: ^4.15.0
   flutter_awesome_alert_box: ^2.1.1
-  awesome_dialog: ^2.2.1
-  pin_code_fields: ^7.4.0
+  awesome_dialog: ^3.2.0
+  pin_code_fields: ^8.0.1
   http:
-  connectivity_plus: ^2.3.6
+  connectivity_plus: ^2.1.0
   firebase_messaging: ^14.6.0
-  internet_connection_checker: ^0.0.1+4
+  internet_connection_checker: ^1.0.0+1
   flutter_native_splash:
-  url_launcher: ^6.1.5
+  url_launcher: ^6.1.0
   font_awesome_flutter: ^10.1.0
-  showcaseview: ^1.1.8
-  flutter_launcher_icons: ^0.10.0
-  lottie: ^1.4.1
+  showcaseview: ^2.0.3
+  flutter_launcher_icons: ^0.11.0
+  lottie: ^2.7.0
   flutter_screenutil: ^5.6.1
   flutter_otp_text_field: ^1.1.1
-  file: ^6.1.4
-  fluttertoast: ^8.2.1
+  file: ^7.0.0
+  fluttertoast: ^8.2.4
   flutter_spinkit: ^5.1.0
   google_nav_bar: ^5.0.6
-  animated_custom_dropdown: ^1.5.0
+  animated_custom_dropdown:
   pull_to_refresh: ^2.0.0
   chips_choice_null_safety:
   chewie_audio: ^1.5.0
-
-
+  equatable:
+  dartz: ^0.10.1
+  get_it: ^7.2.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

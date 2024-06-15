@@ -23,7 +23,7 @@ class ChangePasswordScreen extends StatelessWidget {
         appBar: AppBar(
           title: buildText(
             text: '$ChangePasswordVerifiedTitle',
-            textStyle: Theme.of(context).textTheme.caption,
+            textStyle: Theme.of(context).textTheme.bodyMedium,
           ),
           centerTitle: true,
         ),

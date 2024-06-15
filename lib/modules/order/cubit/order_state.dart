@@ -23,5 +23,13 @@ class SendOrderErrorState extends OrderState{}
 
 
 
+class CheckSocketOrderState extends OrderState{}
 
 
+class GetOrdersForUserSuccessState extends OrderState{}
+class GetOrdersForUserLoadingState extends OrderState{}
+class GetOrdersForUserErrorState extends OrderState{}
+
+class GetOrdersForUserDetailsSuccessState extends OrderState{}
+class GetOrdersForUserDetailsLoadingState extends OrderState{}
+class GetOrdersForUserDetailsErrorState extends OrderState{}

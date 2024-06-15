@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store/modules/auth/re_password/re_password_cubit/cubit.dart';
 import 'package:store/modules/auth/re_password/re_password_cubit/states.dart';
+import 'package:store/modules/auth/re_password/screens/change_password_screen.dart';
 import 'package:store/modules/auth/re_password/screens/repassword_verified_screen.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/components/constansts/string_const.dart';
@@ -20,7 +21,7 @@ class CheckPhoneNumberScreen extends StatelessWidget {
         appBar: AppBar(
           title: buildText(
             text: '$rePasswordTitle',
-            textStyle: Theme.of(context).textTheme.caption,
+            textStyle: Theme.of(context).textTheme.bodyMedium,
           ),
           centerTitle: true,
         ),
@@ -99,8 +100,8 @@ class CheckPhoneNumberScreen extends StatelessWidget {
                           ),
                         );
                       } else if (state.checkPhoneNumberModel.status!) {
-                        navigateTo(context, RePasswordVerifiedScreen(phone: phoneNumberController.text));
-                        RePasswordCubit.get(context).rePasswordVerifiedPhone(phoneNumberController.text);
+                        navigateTo(context, ChangePasswordScreen(phone: phoneNumberController.text));
+                       // RePasswordCubit.get(context).rePasswordVerifiedPhone(phoneNumberController.text);
                       }
                     }
                     if (state is RePasswordCheckPhoneNumberErrorState) {

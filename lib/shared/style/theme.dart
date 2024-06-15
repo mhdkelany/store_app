@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:store/shared/style/color.dart';
 ThemeData darkMode=ThemeData(
@@ -32,31 +33,52 @@ ThemeData darkMode=ThemeData(
         unselectedItemColor: Colors.grey
     ),
     textTheme: TextTheme(
-      bodyText1: TextStyle(
+      bodySmall: TextStyle(
           fontSize: 18.0,
           fontWeight: FontWeight.w700,
           color: Colors.white
       ),
-      subtitle1: TextStyle(
+      titleMedium: TextStyle(
           fontSize: 14.0,
           fontWeight: FontWeight.w700,
           color: Colors.white
       ),
+      bodyMedium: TextStyle()
     ),
 );
 ThemeData lightMode=ThemeData(
+  dropdownMenuTheme: DropdownMenuThemeData(
+    textStyle: TextStyle(
+      color: Colors.black
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20)
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+    )
+  ),
     primaryColor: primaryColor,
     colorScheme: ColorScheme.fromSwatch(
     ).copyWith(
       primary: primaryColor
     ),
+    cardTheme: CardTheme(
+      surfaceTintColor: Colors.white
+    ),
+    dialogTheme: DialogTheme(
+      surfaceTintColor: Colors.white,
+      backgroundColor: Colors.white,
+      contentTextStyle: TextStyle(
+        color: Colors.black,
+        fontFamily: 'tajawal-light',
+        fontSize: 18.sp
+      )
+    ),
     appBarTheme: AppBarTheme(
       titleSpacing: 20.0,
-      systemOverlayStyle: SystemUiOverlayStyle(
-        // statusBarColor: Colors.white,
-        // systemStatusBarContrastEnforced: true,
-        // statusBarIconBrightness: Brightness.dark,
-      ),
       color: Colors.white,
       elevation: 0.0,
       titleTextStyle: TextStyle(
@@ -75,26 +97,29 @@ ThemeData lightMode=ThemeData(
         selectedItemColor: primaryColor
     ),
     textTheme: TextTheme(
-      bodyText1: TextStyle(
+      bodyLarge: TextStyle(
           fontSize: 18.0,
           fontWeight: FontWeight.w700,
           color: Colors.black
       ),
-      caption: TextStyle(
-        fontSize: 14
+      bodyMedium: TextStyle(
+        fontSize: 12,
+        color: Colors.grey
       ),
-      bodyText2: TextStyle(
+      bodySmall: TextStyle(
         fontSize: 22.0,
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        color: Colors.black,
       ),
-      subtitle1: TextStyle(
+      titleMedium: TextStyle(
           fontSize: 14.0,
           color: Colors.black
       ),
     ),
   fontFamily: 'tajawal-medium',
+
 );
+/*
 ThemeData lightModeFor=ThemeData(
     primaryColor: primaryColor,
     colorScheme: ColorScheme.fromSwatch(
@@ -144,4 +169,4 @@ ThemeData lightModeFor=ThemeData(
       ),
     ),
   fontFamily: 'tajawal-medium',
-);
+);*/

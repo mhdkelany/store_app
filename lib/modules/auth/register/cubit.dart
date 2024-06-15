@@ -7,7 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:store/models/register_model.dart';
 import 'package:store/modules/auth/register/states.dart';
-import 'package:store/modules/choice_user.dart';
+import 'package:store/modules/other/other_screens/choice_user.dart';
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/components/constansts/constansts.dart';
 import 'package:store/shared/network/end_point/end_point.dart';
@@ -58,12 +58,7 @@ class RegisterUserMarketCubit extends Cubit<RegisterUserMarketStates> {
       }
     }).catchError((error){});
     Geolocator.getCurrentPosition().then((value) {
-      // if(newLatLng!=null)
-      //   placemarkFromCoordinates(newLatLng!.latitude, newLatLng!.longitude).then((value) {
-      //     place=value[0];
-      //     print(value);
-      //     emit(RegisterGetCurrentAddressSuccessState());
-      //   });
+
       constLat=value.latitude;
       constLng=value.longitude;
       lat=value.latitude;
@@ -155,7 +150,6 @@ class RegisterUserMarketCubit extends Cubit<RegisterUserMarketStates> {
           'password': password,
           'name': name,
           'phone': phone,
-          'email': 'mmhd@djjsssjfsssssss',
           'lng': lang,
           'lat': lat,
           'user_type': userType,
@@ -219,7 +213,7 @@ class RegisterUserMarketCubit extends Cubit<RegisterUserMarketStates> {
       emit(VerifiedPhoneLoadingState());
       try {
         await FirebaseAuth.instance.verifyPhoneNumber(
-          phoneNumber: '+962${phone}',
+          phoneNumber: '+963${phone}',
           verificationCompleted: (PhoneAuthCredential credential) {},
           verificationFailed: (FirebaseAuthException e) {
             //ScaffoldMessenger.of(context).showSnackBar(buildSnackBar(Text('${e.code}'), Colors.red, Duration(seconds: 3)));

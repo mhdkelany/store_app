@@ -6,10 +6,10 @@ class DioHelper
   {
     dio=Dio(
         BaseOptions(
-          baseUrl: 'https://ibrahim-store.com/api/',
+          baseUrl: 'https://ibrahim-store.com/api2/',
           receiveDataWhenStatusError: true,
-          connectTimeout: 60*1000,
-          receiveTimeout: 60*1000
+          // connectTimeout: 60*1000,
+          // receiveTimeout: 60*1000
         )
     );
   }
@@ -23,12 +23,9 @@ class DioHelper
 
     dio!.options.headers=
     {
-      // 'lang':lang,
       'Content-Type': 'application/json',
       'Authorization':token??''
-
     };
-    print('token is $token');
     return await dio!.get(
       url,
       queryParameters: query,

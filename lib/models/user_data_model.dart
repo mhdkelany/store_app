@@ -14,7 +14,6 @@ class UserDataModel
  bool ? status;
  bool ? statusProfile;
   String ?message;
-  //UserInformation? data;
   int? id;
   dynamic lang;
   dynamic lat;
@@ -31,7 +30,7 @@ class UserDataModel
     if(json['state_profile']!=null)
     statusProfile=json['state_profile'];
     message=json['message'];
-    id=json['id'];
+    id=json['id_user'];
     lang=json['lng'];
     lat=json['lat'];
     name=json['name'];
@@ -45,7 +44,7 @@ class UserDataModel
 }
 class UserInformation
 {
-  String? id;
+  int? id;
   double? lang;
   double? lat;
   String? name;
@@ -56,7 +55,7 @@ class UserInformation
   int? userType;
   UserInformation.fromJson(dynamic json)
   {
-  //  id=json['id'];
+    id=json['id_user'];
     lang=json['lng'];
     lat=json['lat'];
     name=json['name'];

@@ -3,16 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:store/core/utils/services/serviecs_locator.dart';
+import 'package:store/firebase_options.dart';
 import 'package:store/layout/cubit/cubit.dart';
 import 'package:store/layout/cubit/states.dart';
+import 'package:store/modules/auth/presentation/controller/auth_cubit.dart';
 import 'package:store/modules/auth/re_password/re_password_cubit/cubit.dart';
-import 'package:store/modules/categoryandfavorite/cubit/cubit.dart';
-import 'package:store/modules/choice_user.dart';
-import 'package:store/modules/main_screen.dart';
-import 'package:store/modules/on_boarding_screen.dart';
 import 'package:store/modules/auth/register/cubit.dart';
+import 'package:store/modules/categoryandfavorite/presentation/controller/favorite_and_category_cubit.dart';
+import 'package:store/modules/home/home_cubit.dart';
+import 'package:store/modules/manage_product/presentation/controller/manage_product_cubit.dart';
+import 'package:store/modules/maps/presentation/controller/map_cubit.dart';
 import 'package:store/modules/order/cubit/order_cubit.dart';
-import 'package:store/modules/zoom_drawer_screen.dart';
+import 'package:store/modules/other/other_screens/choice_user.dart';
+import 'package:store/modules/home/presentation/screen/main_screen.dart';
+import 'package:store/modules/other/other_screens/on_boarding_screen.dart';
+import 'package:store/modules/home/presentation/screen/zoom_drawer_screen.dart';
+import 'package:store/modules/profile/presentation/controller/profile_cubit.dart';
 import 'package:store/shared/components/constansts/constansts.dart';
 import 'package:store/shared/network/local/cache_helper.dart';
 import 'package:store/shared/network/remote/dio_helper.dart';
@@ -24,7 +31,8 @@ void main() async {
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,
   ]);
-  await Firebase.initializeApp();
+  ServicesLocator.init();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   DioHelper.init();
   await CacheHelper.init();
   token = CacheHelper.getCacheData(key: 'token');
@@ -70,10 +78,25 @@ class MyApp extends StatelessWidget {
                 create: (context) => RePasswordCubit(),
               ),
               BlocProvider(
-                create: (BuildContext context) => CategoriesAndFavoriteCubit(),
+                create: (BuildContext context) => OrderCubit(sl(),sl(),sl(),),
               ),
               BlocProvider(
-                create: (BuildContext context) => OrderCubit(),
+                create: (BuildContext context) => HomeCubit(sl(),sl(),sl()),
+              ),
+              BlocProvider(
+                create: (BuildContext context) => AuthCubit(sl(),sl()),
+              ),
+              BlocProvider(
+                create: (BuildContext context) => FavoriteAndCategoryCubit(sl(),sl(),sl(),sl()),
+              ),
+              BlocProvider(
+                create: (BuildContext context) => ProfileCubit(sl(),sl()),
+              ),
+              BlocProvider(
+                create: (BuildContext context) => MapCubit(),
+              ),
+              BlocProvider(
+                create: (BuildContext context) => ManageProductCubit(sl(),sl(),sl(),sl(),sl(),sl()),
               ),
             ],
             child: BlocConsumer<StoreAppCubit, StoreAppStates>(

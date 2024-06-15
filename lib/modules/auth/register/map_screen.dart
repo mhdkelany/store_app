@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:store/modules/auth/register/cubit.dart';
-import 'package:store/modules/auth/register/register_screen.dart';
-import 'package:store/modules/auth/register/states.dart';
+import 'package:store/modules/auth/presentation/controller/auth_cubit.dart';
+import 'package:store/modules/auth/presentation/screens/register_screen.dart';
 
 import 'package:store/shared/components/components.dart';
 import 'package:store/shared/style/color.dart';
@@ -19,7 +18,7 @@ var searchController=TextEditingController();
   );
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<RegisterUserMarketCubit,RegisterUserMarketStates>(
+    return BlocConsumer<AuthCubit,AuthState>(
       listener: (context, state){},
       builder: (context, state)
       {
@@ -35,17 +34,17 @@ var searchController=TextEditingController();
 
                       onCameraMove: (pos)
                       {
-                        RegisterUserMarketCubit.get(context).changeLocation(pos);
-                        RegisterUserMarketCubit.get(context).lat=pos.target.latitude;
-                        RegisterUserMarketCubit.get(context).lang=pos.target.longitude;
-                        print(RegisterUserMarketCubit.get(context).lang);
+                        AuthCubit.get(context).changeLocation(pos);
+                        AuthCubit.get(context).lat=pos.target.latitude;
+                        AuthCubit.get(context).lang=pos.target.longitude;
+                        print(AuthCubit.get(context).lang);
                       },
                       myLocationEnabled: true,
                       myLocationButtonEnabled: false,
                       zoomControlsEnabled: false,
-                      markers: Set<Marker>.from(RegisterUserMarketCubit.get(context).myMarker),
+                      markers: Set<Marker>.from(AuthCubit.get(context).myMarker),
                       mapType: MapType.normal,
-                      initialCameraPosition: RegisterUserMarketCubit.get(context).kGooglePlex!=null?RegisterUserMarketCubit.get(context).kGooglePlex!:kGooglePlex,
+                      initialCameraPosition: AuthCubit.get(context).kGooglePlex!=null?AuthCubit.get(context).kGooglePlex!:kGooglePlex,
                       onMapCreated: (GoogleMapController controller) {
                         _controller=controller;
                       },
@@ -63,7 +62,7 @@ var searchController=TextEditingController();
                           onPressed: ()
                           {
                             print(isMarket);
-                            RegisterUserMarketCubit.get(context).getNewAddress(RegisterUserMarketCubit.get(context).lat!,RegisterUserMarketCubit.get(context).lang!);
+                            AuthCubit.get(context).getNewAddress(AuthCubit.get(context).lat!,AuthCubit.get(context).lang!);
                             navigateTo(context, RegisterScreen(isMarket: isMarket,));
                           },
 
@@ -86,7 +85,7 @@ var searchController=TextEditingController();
                         child: FloatingActionButton(
                             onPressed: ()
                             {
-                              RegisterUserMarketCubit.get(context).changeMarker(_controller!);
+                              AuthCubit.get(context).changeMarker(_controller!);
                             },
                           backgroundColor: Colors.white,
                           elevation: 3,

@@ -22,7 +22,7 @@ class RePasswordVerifiedScreen extends StatelessWidget {
         appBar: AppBar(
           title: buildText(
             text: '$rePasswordVerifiedTitle',
-            textStyle: Theme.of(context).textTheme.caption,
+            textStyle: Theme.of(context).textTheme.bodyMedium,
           ),
           centerTitle: true,
         ),
@@ -60,7 +60,7 @@ class RePasswordVerifiedScreen extends StatelessWidget {
                         context: context,
                         builder: (context) =>Loading(context));
                   }
-                  else if (state is RePasswordAuthPhoneErrorState) {
+                  else if (state is RePasswordVerifiedPhoneNumberWrongState) {
                     Fluttertoast.showToast(
                       msg: "${state.error}",
                       toastLength: Toast.LENGTH_LONG,

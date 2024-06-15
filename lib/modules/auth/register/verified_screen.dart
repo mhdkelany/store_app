@@ -32,8 +32,8 @@ class VerifiedScreen extends StatelessWidget {
           {
             AwesomeDialog(
               context: context,
-              dialogType: DialogType.ERROR,
-              animType: AnimType.BOTTOMSLIDE,
+              dialogType: DialogType.error,
+              animType: AnimType.bottomSlide,
               title: 'لم تتم عملية التحقق',
               desc: 'هنالك خطأ برمز التحقق',
               btnCancelOnPress: () {},
@@ -43,8 +43,8 @@ class VerifiedScreen extends StatelessWidget {
           {
             AwesomeDialog(
               context: context,
-              dialogType: DialogType.SUCCES,
-              animType: AnimType.BOTTOMSLIDE,
+              dialogType: DialogType.success,
+              animType: AnimType.bottomSlide,
               title: 'تمت عملية التحقق بنجاح',
               btnOkText: 'تمت',
               btnOkOnPress: ()
@@ -141,7 +141,7 @@ class VerifiedScreen extends StatelessWidget {
                         if(isTimeOut!)
                         Row(
                           children: [
-                            Text('لم يصل رمز التحقق؟',style: Theme.of(context).textTheme.caption,),
+                            Text('لم يصل رمز التحقق؟',style: Theme.of(context).textTheme.bodyMedium,),
                             Container(height: MediaQuery.of(context).size.height*0.05, child: TextButton(onPressed:state is VerifiedPhoneLoadingState?null: ()
                             {
                               RegisterUserMarketCubit.get(context).verifiedPhone(phone);

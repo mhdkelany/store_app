@@ -1,16 +1,26 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store/layout/cubit/cubit.dart';
-import 'package:store/models/home_model.dart';
+import 'package:store/core/base_use_case.dart';
 import 'package:store/models/products_cart_model.dart';
+import 'package:store/modules/categoryandfavorite/domain/entity/products_of_categories.dart';
+import 'package:store/modules/order/domain/entity/order_entity.dart';
+import 'package:store/modules/order/domain/entity/order_more_details_entity.dart';
+import 'package:store/modules/order/domain/order_usecase/get_order_details_usecase.dart';
+import 'package:store/modules/order/domain/order_usecase/get_orders_usecase.dart';
+import 'package:store/modules/order/domain/order_usecase/order_usecase.dart';
 import 'package:store/shared/components/constansts/constansts.dart';
-import 'package:store/shared/network/end_point/end_point.dart';
-import 'package:store/shared/network/remote/dio_helper.dart';
 
 part 'order_state.dart';
 
 class OrderCubit extends Cubit<OrderState> {
-  OrderCubit() : super(OrderInitialState());
+  final OrderUseCase orderUseCase;
+  final GetOrdersUseCase getOrdersUseCase;
+  final GetOrderDetailsUseCase getOrdersDetailsUseCase;
+
+  OrderCubit(
+      this.orderUseCase, this.getOrdersUseCase, this.getOrdersDetailsUseCase)
+      : super(OrderInitialState());
 
   static OrderCubit get(BuildContext context) => BlocProvider.of(context);
   bool buttonAddToCartShow = true;
@@ -19,7 +29,7 @@ class OrderCubit extends Cubit<OrderState> {
   int testPrice = 100;
   double result = 0.0;
 
-  void addQuantityToCart({ index, bool isCart = false}) {
+  void addQuantityToCart({index, bool isCart = false}) {
     if (!isCart) {
       countQuantity++;
       quantityIndex++;
@@ -125,33 +135,22 @@ class OrderCubit extends Cubit<OrderState> {
     i++;
   }
 
-  void addOrder(context) async {
+  FutureOr<void> order(OrderParameters parameters) async {
     emit(SendOrderLoadingState());
     if (await checkConnection()) {
-      DioHelper.postData(
-        url: BILL,
-        data: {
-          'products': product.map((e) => e.toJson()).toList(),
-          'Authorization': token,
-          'total': priceTotal,
-          'lat': latBill == null
-              ? StoreAppCubit.get(context).userInformation!.lat
-              : latBill,
-          'lng': lngBill == null
-              ? StoreAppCubit.get(context).userInformation!.lang
-              : lngBill,
+      final result = await orderUseCase.call(parameters);
+      result.fold(
+        (l) {
+          emit(SendOrderErrorState());
         },
-      ).then((value) {
-        print(value.data);
-        i = 0;
-        emit(SendOrderSuccessState());
-        removeAllCartItem();
-      }).catchError((error) {
-        emit(SendOrderErrorState());
-        print(error.toString());
-      }).timeout(Duration(seconds: 60), onTimeout: () {
-        emit(SendOrderErrorState());
-      });
+        (r) {
+          i = 0;
+          emit(SendOrderSuccessState());
+          removeAllCartItem();
+        },
+      );
+    } else {
+      emit(CheckSocketOrderState());
     }
   }
 
@@ -161,7 +160,7 @@ class OrderCubit extends Cubit<OrderState> {
     emit(RemoveFromCartState());
   }
 
-  void addToCartOperation(BuildContext context, Products model) {
+  void addToCartOperation(BuildContext context, Product model) {
     bool iss = false;
     changeButtonAddToCartShow();
     for (int i = 0; i < product.length; i++) {
@@ -187,8 +186,53 @@ class OrderCubit extends Cubit<OrderState> {
               quantity: countQuantity,
               priceTotal: countQuantity * double.tryParse(model.price)!,
               index: i);
-        print('ffffff');
       }
     }
   }
+
+  OrderEntity? orderEntity;
+
+  FutureOr<void> getOrders(NoParameters parameters) async {
+    if (token != null) if (await checkConnection()) {
+      emit(GetOrdersForUserLoadingState());
+      final result = await getOrdersUseCase.call(parameters);
+      result.fold(
+        (l) {
+          emit(GetOrdersForUserErrorState());
+        },
+        (r) {
+          orderEntity = r;
+          emit(GetOrdersForUserSuccessState());
+        },
+      );
+    }
+  }
+  OrderForMoreDetailsEntity? orderForMoreDetailsEntity;
+  FutureOr<void> getOrderDetails(int parameter) async {
+    if (token != null)
+      if (await checkConnection()) {
+        emit(GetOrdersForUserDetailsLoadingState());
+        final result = await getOrdersDetailsUseCase.call(parameter);
+        result.fold(
+              (l) {
+                emit(GetOrdersForUserDetailsErrorState());
+              },
+              (r) {
+                orderForMoreDetailsEntity=r;
+                totalMyOrder();
+                emit(GetOrdersForUserDetailsSuccessState());
+              },
+        );
+      }
+  }
+  double totalOrder = 0.0;
+
+  void totalMyOrder() {
+    if (orderForMoreDetailsEntity != null)
+      for (int i = 0; i < orderForMoreDetailsEntity!.orders.length; i++) {
+        totalOrder =
+            totalOrder + double.tryParse(orderForMoreDetailsEntity!.orders[i].sum)!;
+      }
+  }
+
 }
